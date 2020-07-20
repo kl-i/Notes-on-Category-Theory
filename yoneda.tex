@@ -1,0 +1,317 @@
+\begin{dfn}[Dual Categories]\hypertarget{dual}{}
+  
+  Let $\CC \in \obj{\CAT}$. 
+  Then the \emph{dual category of $\CC$}, denoted $\CC\op$,
+  is defined by : 
+  \begin{enumerate}
+    \item $\obj{\CC\op} := \obj{\CC}$. 
+    \item For all $U, V \in \obj{\CC\op}$,
+    $\mor{U}{V}{\CC\op} := \mor{V}{U}{\CC}$.
+  \end{enumerate}
+\end{dfn}
+
+\begin{dfn}[Contravariant Functors]\hypertarget{contravar}{}
+  
+  Let $\CC, \DD \in \obj{\CAT}$. 
+  Then a \emph{contravariant functor from $\CC$ to $\DD$} is 
+  just a functor $\map{\CC\op}{\DD}{\CAT}{}$. 
+  Functors $\map{\CC}{\DD}{\CAT}{}$ are henceforth called 
+  \emph{covariant functors from $\CC$ to $\DD$}. 
+\end{dfn}
+
+% \begin{dfn}[Category of Presheaves on a Category]\hypertarget{presheaf}
+%   
+%   Let $\CC \in \obj{\CAT}$. 
+%   Then the \emph{category of presheaves on $\CC$} is defined as 
+%   the category of contravariant functors from $\CC$ to $\SET$. 
+%   It is denoted $\PSH{\CC}$. 
+% \end{dfn}
+
+\begin{dfn}[Morphism Functor]\hypertarget{mor_funk}{}
+  
+  Let $\CC$ be a category and $U \in \obj{\CC}$. 
+  Then $h_U : \map{\CC\op}{\SET}{\CAT}{}$ is defined as : 
+  \begin{enumerate}
+    \item For all $V \in \obj{\CC\op}$, 
+    $h_U(V) := \mor{V}{U}{\CC}$. 
+    \item For all $V, W \in \obj{\CC\op}$ and $f : \map{V}{W}{\CC\op}{}$, 
+    $h_U(f) : \map{h_U(V)}{h_U(W)}{}{}, g \mapsto g \circ f$. 
+  \end{enumerate}
+  Similarly, $h^U : \map{\CC}{\SET}{\CAT}{}$ is defined as : 
+  \begin{enumerate}
+    \item For all $V \in \obj{\CC}$, 
+    $h^U(V) := \mor{U}{V}{\CC}$. 
+    \item For all $V, W \in \obj{\CC}$ and $f : \map{V}{W}{\CC}{}$, 
+    $h^U(f) : \map{h^U(V)}{h^U(W)}{}{}, 
+    g \mapsto f \circ g$. 
+  \end{enumerate}
+\end{dfn}
+
+\begin{prop}[Morphism Functor is Functorial]\hypertarget{mor_funk_funk}{}
+  
+  Let $\CC$ be a category. 
+  Then $h_{\star} : \map{\CC}{\SET^{\CC\op}}{\CAT}{}$. 
+  Similarly, $h^\star : \map{\CC\op}{\SET^\CC}{\CAT}{}$. 
+\end{prop}
+
+\begin{rmk}[Functor of Points]\hypertarget{funk_pts}{}
+  
+  Because of its relevance in algebraic geometry, 
+  $h_U$ is called the \emph{functor of points of $U$}. 
+\end{rmk}
+
+\begin{prop}[Yoneda's Lemma]\hypertarget{yoneda}{}
+  
+  Let $\CC$ be a category. 
+  Then $h_{\star} : \map{\CC}{\SET^{\CC\op}}{\CAT}{}$ is fully faithful.
+  Since \hyperlink{full_faith_inj}{fully faithful functors are injective}, 
+  $h_\star$ is called the \emph{Yoneda embedding}. 
+
+  More generally, for any $U \in \obj{\CC}$ and $F \in \obj{\SET^{\CC\op}}$,
+  $\mor{h_U}{F}{\SET^{\CC\op}}$ bijects with $F(U)$ via 
+  $s \mapsto s_U(\id{U})$ and this bijection is natural in 
+  both $U$ and $F$.
+
+  Dually, $h^\star : \map{\CC\op}{\SET^{\CC}}{\CAT}{}$ is fully faithful
+  and more generally, 
+  for any $U \in \obj{\CC\op}$ and $F \in \obj{\SET^\CC}$,
+  $\mor{h^U}{F}{\SET^\CC}$ naturally bijects with $F(U)$ 
+  via $s \mapsto s_U(\id{U})$.
+
+\end{prop}
+\begin{proof}
+
+  We first prove the general statement.
+  Let $U \in \obj{\CC}$ and $F \in \obj{\SET^{\CC\op}}$.
+  To show injectivity, let $s, t \in \mor{h_U}{F}{\SET^{\CC\op}}$ and
+  assume $s_U(\id{U}) = t_U(\id{U})$. 
+  To show $s = t$, let $W \in \obj{\CC}$, $f \in h_U(W)$ and
+  consider the following commutative diagram, 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      h_U(U) \arrow[rrr,"s_U"] \arrow[ddd,"h_U(f)"{swap}] 
+      & 
+      & 
+      & F(U) \arrow[ddd,"F(f)"] 
+      \\
+      & \id{U} \ar[r,mapsto] \ar[d,mapsto]& s_U(\id{U}) \ar[d,mapsto]& \\
+      & f \ar[r,mapsto] & s_W(f) = F(f)(s_U(\id{U})) & \\
+      h_U(W) \arrow[rrr,"s_W"{swap}] 
+      & 
+      & 
+      & F(W) 
+    \end{tikzcd}
+  \end{figure}
+  By considering an analogous for $t$,
+  we get $s_W(f) = t_W(f)$.
+  So $s_W = t_W$, and hence $s = t$. 
+  To show surjectivity, let $x \in F(U)$. 
+  Define $s \in \mor{h_U}{F}{\SET^{\CC\op}}$ by 
+  for all $V \in \obj{\CC}$, \[
+    s_V : f \in h_U(V) \mapsto F(f)(x) \in F(V)
+  \]
+  Then by the above diagram, $s_U(\id{U}) = x$. 
+  This proves the desired bijection.
+
+  For naturality in the first component,
+  let $f : \map{U}{V}{\CC}{}$.
+  Then we have the following commutative diagram. 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      \mor{h_U}{F}{\SET^{\CC\op}} \ar[rrr]
+      & & & F(U) \\
+      & s\circ h^f \ar[r,mapsto]
+      & (s\circ h^f)_U (\id{U}) 
+        = s_V(f)
+        = F(f) \circ s_U (\id{U}) & \\
+      & s \ar[u,mapsto] \ar[r,mapsto] & s_U(\id{U}) \ar[u,mapsto] & \\
+      \mor{h_V}{F}{\SET^{\CC\op} } \ar[uuu,"(\star\circ h^f)"] \ar[rrr,""]
+      & & & F(V) \ar[uuu,"F(f)"{swap}]
+    \end{tikzcd}
+  \end{figure}
+  For naturality in the second component, 
+  let $\al : \map{F}{G}{\SET^{\CC\op}}{}$.
+  Then we have the following commutative diagram.
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      \mor{h_U}{F}{\SET^{\CC\op}} \ar[rrr]
+        \ar[ddd,"(\al\circ \star)"{swap}]
+      & & & F(U) \ar[ddd,"\al_U"] \\
+      & s \ar[r,mapsto] \ar[d,mapsto]
+      & s_U (\id{U}) \ar[d,mapsto] & \\
+      & \al\circ s \ar[r,mapsto] 
+      & (\al\circ s)_U (\id{U}) = \al_U \circ s_U(\id{U})
+      & \\
+      \mor{h_U}{G}{\SET^{\CC\op} } \ar[rrr,""]
+      & & & G(U)
+    \end{tikzcd}
+  \end{figure}
+  We thus have the desired result. 
+
+  To show $h_\star$ is fully faithful, 
+  let $U, V \in \obj{\CC}$ and apply the above to $F := h_V$.
+\end{proof}
+
+\begin{dfn}[Representable Functors]
+  \hypertarget{rep}{}
+  
+  Let $G : \map{\CC}{\DD}{\CAT}{}$ be a covariant functor. 
+  Then a \emph{representation of $G$} is a $(U,u) \in h^\star\darrow G$
+  where $u : \map{h^\star}{G}{\SET^\CC}{\sim}$.
+
+  Dually, let $F : \map{\CC\op}{\DD}{}{}$ be a contravariant functor. 
+  Then a \emph{representation of $F$} is a $(U,u) \in h_\star\darrow F$
+  where $u : \map{h_\star}{F}{\SET^{\CC\op}}{\sim}$.
+
+  A functor (covariant or contravariant) that has a representation is called 
+  \emph{representable}.
+\end{dfn}
+
+\begin{rmk}
+  If a functor has a representation,
+  Yoneda's lemma implies it is canonical.
+  This is the \hyperlink{canonical_rep}{next result}. 
+
+  Before this, we first relate universal morphisms to representable functors.
+  This is important as it leads to the notion of \emph{adjunction}. 
+\end{rmk}
+
+\begin{prop}[Universal iff Represents]
+  \hypertarget{uni_iff_rep}{}
+  
+  Let $R : \map{\CC}{\DD}{\CAT}{}$, $X \in \obj{\DD}$,
+  $(L(X),\eta_X) \in \obj{X\darrow R}$. 
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item $(L(X),\eta_X)$ is a universal morphism from $X$ to $R$.
+    \item $L(X)$ represents the covariant functor $\mor{X}{R(\star)}{\DD}$
+    and $\id{L(X)}$ corresponds to $\eta_X$. 
+  \end{enumerate}
+
+  Dually, let $L : \map{\DD}{\CC}{\CAT}{}$, $U \in \obj{\CC}$,
+  $(R(U),\ep_U) \in \obj{L\darrow U}$. 
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item $(R(U),\ep_U)$ is a universal morphism from $L$ to $U$.
+    \item $R(U)$ represents the contravariant functor $\mor{L(\star)}{U}{\CC}$
+    and $\id{R(U)}$ corresponds to $\ep_U$.
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  (Universal implies Represents) 
+  Let $(L(X),\eta_X)$ be a universal morphism from $X$ to $R$. 
+  Define the following natural transformation,
+  \begin{align*}
+    &\map{h^{L(X)}}{\mor{X}{R(\star)}{\DD}}{\SET^\CC}{} := \\
+    &W \in \obj{\CC} \mapsto \sqbrkt{
+      f \in h^{L(X)}(W) \mapsto R(f) \circ \eta_X \in \mor{X}{R(W)}{\DD}
+    }
+  \end{align*}
+  Then for every $W \in \obj{\CC}$, 
+  this is an isomorphism between $h^{L(X)}(W)$ and $\mor{X}{R(W)}{\DD}$,
+  and hence a natural isomorphism. 
+  Indeed, $\id{L(X)}$ corresponds to $\eta_X$ under this natural isomorphism.
+
+  (Represents implies Universal)
+  Let $\al : \map{h^{L(X)}}{\mor{X}{R(\star)}{\DD}}{\SET^\CC}{}$
+  be a natural isomorphism where at $L(X)$,
+  $\al_{L(X)}(\id{L(X)}) = \eta_X$.
+  Let $(V,v) \in \obj{X\darrow R}$.
+  For any $f : \map{L(X)}{V}{\CC}{}$,
+  consider the following commutative diagram. 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      h^{L(X)}(L(X)) \arrow[rrr,"\al_{L(X)}"] \arrow[ddd,"h^{L(X)}(f)"{swap}] 
+      & 
+      & 
+      & \mor{X}{RL(X)}{\DD} \arrow[ddd,"\mor{X}{R(f)}{\DD}"] \\
+      & \id{L(X)} \ar[r,mapsto] \ar[d,mapsto]
+      & \al_{L(X)}(\id{L(X)}) = \eta_X \ar[d,mapsto] 
+      & \\
+      & f \ar[r,mapsto] 
+      & \al_V(f) = R(f) \circ \eta_X 
+      & \\
+      h^{L(X)}(V) \arrow[rrr,"\al_V"{swap}] 
+      & 
+      & 
+      & \mor{X}{R(V)}{\DD}
+    \end{tikzcd}
+  \end{figure}
+  Thus $f : \map{(L(X),\eta_X)}{(V,v)}{X\darrow R}{}$
+  if and only if $\al_V(f) = v$.
+  Then $\al_V\inv(v)$ is 
+  the unique morphism $\map{(L(X),\eta_X)}{(V,v)}{X\darrow R}{}$.
+  Since there exists a unique $\map{(L(X),\eta_X)}{(V,v)}{X\darrow R}{}$,
+  $(L(X),\eta_X)$ is universal.
+
+  The dual equivalence has an analogous proof.
+\end{proof}
+
+\begin{prop}[Canonical Representation]
+  \hypertarget{canonical_rep}{}
+  
+  Let $G : \map{\CC}{\DD}{\CAT}{}$ and $(U,u) \in h^\star\darrow G$.
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item $(U,u)$ is a representation of $G$.
+    \item $(U,u)$ is a universal morphism from $h^\star$ to $G$.
+  \end{enumerate}
+  In particular, 
+  representations of $G$ are canonically isomorphic. 
+
+  Dually, let $F : \map{\CC\op}{\DD}{\CAT}{}$ and $(V,v) \in h_\star\darrow F$.
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item $(V,v)$ is a representation of $F$.
+    \item $(V,v)$ is a universal morphism from $h_\star$ to $F$.
+  \end{enumerate}
+  In particular, 
+  representations of $F$ are canonically isomorphic. 
+\end{prop}
+\begin{proof}
+  (Representation implies Universal)
+  Let $(W,w) \in \obj{h^\star\darrow G}$.
+  Then $u\inv \circ w : \map{h^W}{h^U}{\SET^\CC}{}$.
+  By \hyperlink{yoneda}{Yoneda's lemma},
+  there exists a unique $u(W,w) : \map{U}{W}{\CC}{}$ such that 
+  $u\inv \circ w = h^{u(W,w)}$.
+  Hence $u(W,w)$ is the unique morphism 
+  $\map{(W,w)}{U,u}{h^\star\darrow G}{}$.
+
+  (Universal implies Representation)
+  By \hyperlink{uni_iff_rep}{universal iff represents}
+  and \hyperlink{yoneda}{Yoneda's lemma},
+  we have the following diagram. 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}[sep = huge]
+      \mor{h^\star}{G}{\SET^\CC} 
+        \ar[r,"V \in \obj{\CC} \mapsto \sqbrkt{
+          s \in \mor{h^V}{G}{\SET^\CC} \mapsto s_V(\id{V})
+        }"{yshift = 3mm},"\sim"{swap}]
+      & G \\
+      h^U \ar[u,
+        "V \in \obj{\CC} \mapsto \sqbrkt{
+          f \in h^U(V) \mapsto u \circ h^f
+        }",
+        "\sim"{swap}
+        ]
+        \ar[ur,"u"]
+      &
+    \end{tikzcd}
+  \end{figure}
+  The claim is that the above commutes, and hence $u$ is an isomorphism.
+  Let $V \in \obj{\CC}$ and $f \in h^U(V)$.
+  Then \begin{align*}
+    (h^f \circ u)_V(\id{V})
+    = u_V \circ \brkt{h^f}_V \brkt{\id{V}}
+    = u_V (f)
+  \end{align*}
+  So the above diagram commutes. 
+
+  For the dual, the argument is similar. 
+\end{proof}

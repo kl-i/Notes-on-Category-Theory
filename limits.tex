@@ -1,0 +1,179 @@
+\begin{dfn}[(Co)Diagrams]\link{diagrams}
+  
+  Let $\II, \CC$ be categories. 
+  Then an \emph{$\II$-diagram in $\CC$} is 
+  a covariant functor from $\II$ to $\CC$. 
+  Dually, an \emph{$\II$-codiagram} is a contravariant functor 
+  from $\II$ to $\CC$,
+  i.e. an $\II\op$-diagram. 
+\end{dfn}
+
+\begin{rmk}
+  Often, it is easier to take $\II$ to be a subcategory of $\CC$. 
+\end{rmk}
+
+\begin{dfn}[Constant (Co)Diagrams]\link{const}
+  
+  Let $\II, \CC$ be categories and $U \in \obj{\CC}$. 
+  Then define the \emph{constant diagram $\De(U)$} as follows. 
+  \begin{enumerate}
+    \item For all $i \in \II$, $\De(U)(i) := U$. 
+    \item For all $\phi : \map{i}{j}{\II}{}$, 
+    $\De(U)(\phi) := \id{U}$.
+  \end{enumerate}
+  Dually, we have the \emph{constant codiagram $\De\op(U)$} defined as : 
+  \begin{enumerate}
+    \item For all $i \in \obj{\II}$, $\De\op(U)(i) := U$. 
+    \item For all $\phi : \map{i}{j}{\II\op}{}$, 
+    $\De(U)(\phi) := \id{U}$.
+  \end{enumerate}
+\end{dfn}
+
+\begin{prop}[Functoriality of Constant (Co)Diagrams]\link{const_funk}
+  
+  Let $\II, \CC$ be categories. 
+  Then $\De : \map{\CC}{\CC^\II}{}{}$.
+  Dually, $\De\op : \map{\CC}{\CC^{\II\op}}{}{}$.
+\end{prop}
+
+\begin{dfn}[(Co)Limits of (Co)Diagrams]\link{limit}
+  
+  Let $\II, \CC$ be categories, $X$ a $\II$-diagram in $\CC$,
+  and $Y$ a $\II$-codiagram in $\CC$.
+
+  Then a \emph{limit of $X$} is a universal morphism 
+  from $\De$ to $X$. 
+  If a limit of $X$ exists, 
+  it is \linkto{canonical}{canonical} and 
+  referred to as \emph{the} limit,
+  denoted $(\LIM{X}{}, \pi_X)$.
+  
+  Dually, a \emph{colimit of $Y$} is a universal morphism from $Y$ to $\De\op$. 
+  If a colimit of $Y$ exists, 
+  it is canonical and referred to as \emph{the} colimit, 
+  denoted with $(\COLIM{Y}{}, \io_Y)$.
+\end{dfn}
+
+\begin{rmk}
+  Sometimes limits are also called \emph{projective limits},
+  and colimits are called \emph{injective limits}. 
+\end{rmk}
+
+\begin{dfn}[(Co)Completeness]\link{complete}
+  
+  Let $\CC$ be a category. 
+  Then it is called \emph{complete} when 
+  for all ``small'' categories $\II$ and diagrams $X : \map{\II}{\CC}{\CAT}{}$,
+  there exists the limit of $X$.
+
+  Dually, it is called \emph{cocomplete} when 
+  for all ``small'' categories $\II$ and 
+  codiagrams $Y : \map{\II\op}{\CC}{\CAT}{}$,
+  there exists the colimit of $Y$.
+\end{dfn}
+
+\begin{rmk}
+  We now cover important examples of limits and colimits. 
+\end{rmk}
+
+\begin{dfn}[Discrete Category]\link{discrete}
+  
+  For $I \in \obj{\SET}$, 
+  $I$ can be turned into a category by having elements as objects 
+  and the only morphisms being identity morphisms. 
+  Categories obtained in this way are called \emph{discrete categories}.
+\end{dfn}
+
+\begin{rmk}
+  Note that a discrete category $\II$ is canonically isomorphic to its dual. 
+  That is to say, there is a unique isomorphism of categories 
+  between $\II$ and $\II\op$.
+  Consequently, $\II$-diagrams and $\II$-codiagrams are ``the same''.
+\end{rmk}
+
+\begin{dfn}[(Co)Products]\link{prod}
+  
+  Let $\CC$ be a category and $\II$ a discrete category. 
+
+  Let $X$ be an $\II$-diagram in $\CC$.
+  Then the limit of $X$ is called the \emph{product of $X(i)$}.
+
+  Dually, let $Y$ be an $\II$-codiagram in $\CC$.
+  Then the colimit of $Y$ is called the \emph{coproduct of $Y(i)$}.
+
+  In the special case of $I = \nothing$, 
+  the product is called the \emph{final object of $\CC$}.
+  Dually, the coproduct is called the \emph{initial object of $\CC$}.
+\end{dfn}
+
+\begin{eg}[Final Objects]\link{eg_final}
+  
+\end{eg}
+
+\begin{eg}[Initial Objects]\link{eg_initial}
+  
+\end{eg}
+
+\begin{eg}[Products]\link{eg_prod}
+  
+\end{eg}
+
+\begin{eg}[Coproducts]\link{eg_coprod}
+  
+\end{eg}
+
+\begin{dfn}[(Co)Equalizers]\link{equalizer}
+  
+  Let $\CC$ be a category. 
+  Let $I$ be an arbitrary set and $\II$ be the following category. 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      0 \ar[loop above,"\id{0}"] \ar[r,"i"]
+      & 1 \ar[loop above,"\id{1}"] 
+    \end{tikzcd}
+  \end{figure}
+  where there is a morphism $i : \map{0}{1}{\II}{}$ for all $i \in I$. 
+
+  Let $X$ be an $\II$-diagram in $\CC$. 
+  Then the limit of $X$ is called 
+  the \emph{equalizer of $X(i)$'s}. 
+  Dually, let $Y$ be an $\II$-codiagram in $\CC$. 
+  Then the colimit of $Y$ is called the 
+  \emph{coequalizer of $Y(i)$'s}.
+\end{dfn}
+
+\begin{eg}[Equalizers]
+  
+\end{eg}
+
+\begin{eg}[Coequalizers]
+  
+\end{eg}
+
+\begin{dfn}[Pullbacks and Pushouts]\link{pullback}
+  
+  Let $\CC$ be a category, $U \in \obj{\CC}$.
+  Then a \emph{pullback over $U$} is a product in the 
+  category $\CC\darrow U$.
+  Dually, a \emph{pushout under $U$} is a coproduct in the 
+  category $U\darrow \CC$.
+
+  Let $I$ be an arbitrary set and $\II$ the following category. 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      i \ar[loop above,"\id{0}"] \ar[r,"\phi(i)"]
+      & * \ar[loop above,"\id{1}"] 
+    \end{tikzcd}
+  \end{figure}
+  \begin{enumerate}
+    \item $\obj{\II} = I \sqcup \set{*}$.
+    \item For all $x \in \obj{\II}$, $\mor{x}{x}{\II} = \set{\id{x}}$.
+    \item For all $i \in I$, $\mor{i}{*}{\II} = \set{\phi(i)}$.
+  \end{enumerate}
+  Then a pullback over $U$ is equivalently the limit of 
+  an $\II$-diagram $X$ with $X(*) = U$. 
+  Dually, a pushout under $U$ is equivalently the colimit of 
+  an $\II$-codiagram $Y$ with $Y(*) = U$.
+\end{dfn}

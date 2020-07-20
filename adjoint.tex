@@ -1,0 +1,322 @@
+\begin{dfn}[Adjoint Functors]
+  \hypertarget{adjoint}{}
+  
+  Let $R : \map{\CC}{\DD}{\CAT}{}$.
+  Then $R$ is a \emph{right adjoint} when 
+  there exists $L : \map{\obj{\DD}}{\obj{\CC}}{}{}$ and 
+  $\eta \in \Pi {X \in \obj{\DD}}, \mor{X}{RL(X)}{\DD}$ such that 
+  for all $X\in\obj{\DD}$, 
+  $(L(X),\eta(X))$ is a universal morphism from $X$ to $R$.
+  In this case, $L$ is called the \emph{left adjoint of $R$}.
+  \newline 
+  
+  Dually, let $L : \map{\DD}{\CC}{\CAT}{}$.
+  Then $L$ is a \emph{left adjoint} when 
+  there exists $R : \map{\obj{\CC}}{\obj{\CC}}{}{}$ and 
+  $\ep \in \Pi {U \in \obj{\CC}}, \mor{LR(U)}{U}{\CC}$ such that 
+  for all $U\in\obj{\CC}$,
+  $(R(U),\ep(U))$ is a universal morphism from $L$ to $U$. 
+  In this case, $R$ is called the \emph{right adjoint of $L$}.
+\end{dfn}
+
+\begin{dfn}[Product Category]
+  \hypertarget{product_cat}{}
+  
+  Let $\CC, \DD$ be categories. 
+  Then the \emph{product category of $\CC, \DD$} is denoted 
+  $\CC\times\DD$ and is defined as follows. 
+  \begin{enumerate}
+    \item $\obj{\CC\times\DD} := \obj{\CC}\times\obj{\DD}$.
+    \item For $(U,X), (V,Y) \in \obj{\CC\times\DD}$, 
+    $\mor{(U,X)}{(V,Y)}{\CC\times\DD} := \mor{U}{V}{\CC}\times\mor{X}{Y}{\DD}$.
+  \end{enumerate}
+\end{dfn}
+
+\begin{prop}[Natural Transformations on Product Category]
+  \hypertarget{nat_trans_prod_cat}{}
+  
+  Let $F, G : \map{\CC\times\DD}{\EE}{}{}$, 
+  $\al \in \Pi (U,X) \in \obj{\CC\times\DD}, \mor{F(U)}{G(X)}{\EE}$.
+  Then the following are equivalent. 
+  \begin{enumerate}
+    \item $\al : \map{F}{G}{}{}$.
+    \item For all $(U,X) \in \obj{\CC\times\DD}$, 
+    $\al(U,-) : \map{F(U,-)}{G(U,-)}{}{}$ and 
+    $\al(-,X) : \map{F(-,X)}{G(-,X)}{}{}$.
+  \end{enumerate}
+\end{prop}
+
+\begin{dfn}[Adjunction]
+  \hypertarget{adjunction}{}
+  
+  Let $R : \map{\CC}{\DD}{\CAT}{}$ and $L : \map{\DD}{\CC}{\CAT}{}$.
+  We have the two functors 
+  $\mor{L(\star)}{-}{\CC}, \mor{\star}{R(-)}{\DD} : 
+  \map{\DD\op\times\CC}{\SET}{\CAT}{}$.
+  Then $(L,R)$ is an \emph{adjunction} when 
+  $\mor{L(\star)}{-}{\CC}, \mor{\star}{R(-)}{\DD}$
+  are naturally isomorphic. 
+  
+  In this case, 
+  $R$ is called the \emph{right adjoint of $L$}
+  and $L$ is called the \emph{left adjoint of $R$}.
+  The isomorphism is called the \emph{adjunction isomorphism}. 
+  For all $f : \map{L(X)}{U}{\CC}{}$,
+  the image of $f$ under the adjunction isomorphism is called 
+  the \emph{adjunct of $f$}, denoted $f^\bot$. 
+  Similarly for $g : \map{X}{R(U)}{\DD}{}$, 
+  we have the \emph{adjunct of $g$}, denoted $g^\bot$.
+\end{dfn}
+
+\begin{prop}[Universal Morphism Characterisation of Adjunction]
+  \hypertarget{uniprop_char_adj}{}
+
+  Let $R : \map{\CC}{\DD}{\CAT}{}$.
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item $R$ is a right adjoint. 
+    \item There exists $L : \map{\DD}{\CC}{\CAT}{}$ such that 
+    $(L,R)$ is an adjunction. 
+  \end{enumerate}
+
+  Dually, let $L : \map{\DD}{\CC}{\CAT}{}$.
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item $L$ is a left adjoint. 
+    \item There exists $R : \map{\CC}{\DD}{\CAT}{}$ such that 
+    $(L,R)$ is an adjunction. 
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  $(\implies)$
+  Let $R$ be a right adjoint, $L : \map{\obj{\DD}}{\obj{\CC}}{}{}$, 
+  $\eta \in \Pi X \in \obj{\DD}, \mor{X}{RL(X)}{\DD}$,
+  for all $X \in \obj{\DD}$, $(L(X),\eta(X))$ universal morphism from 
+  $X$ to $R$.
+
+  The universal properties at every $X \in \obj{\DD}$ implies 
+  $L$ is functorial.
+  By \hyperlink{uni_iff_rep}{universal iff represents},
+  for all $X \in \obj{\DD}$, 
+  we have $\mor{L(X)}{-}{\CC} \cong \mor{X}{R(-)}{\DD}$
+  as functors $\map{\CC}{\SET}{}{}$.
+  Let $f : \map{X}{Y}{\DD}{}$ and $U \in \obj{\CC}$.
+  Then we have the following commutative diagram. 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      \mor{L(X)}{U}{\CC} \ar[rrr,"R(-)\circ\eta(X)"]
+      & & & \mor{X}{R(U)}{\DD} \\
+      & g \circ L(f) \ar[r,mapsto]
+      & R(g \circ L(f)) \circ \eta(X) = R(g) \circ \eta(Y) \circ f
+      & \\
+      & g \ar[u,mapsto] \ar[r,mapsto] & R(g)\circ\eta(Y) \ar[u,mapsto] & \\
+      \mor{L(Y)}{U}{\CC} \ar[uuu,"h^{L(f)}"]
+        \ar[rrr,"R(-)\circ\eta(Y)"{swap}]
+      & & & \mor{Y}{R(U)}{\DD} \ar[uuu,"h^f"{swap}]
+    \end{tikzcd}
+  \end{figure}
+  Thus the isomorphism $\mor{L(X)}{-}{\CC} \cong \mor{X}{R(-)}{\DD}$
+  is functorial in $X$, 
+  and hence an isomorphism between
+  $\mor{L(\star)}{-}{\CC} \cong \mor{\star}{R(-)}{\DD}$.
+
+  $(\limplies)$ 
+  Let $L : \map{\obj{\DD}}{\CC}{\CAT}{}$ such that 
+  $(L,R)$ is an adjunction. 
+  Then for each $X \in \obj{\DD}$, 
+  $\mor{L(X)}{-}{\CC} \cong \mor{X}{R(-)}{\DD}$.
+  Let $\eta(X)$ be the adjunct of $\id{L(X)}$.
+  By \hyperlink{uni_iff_rep}{universal iff represents},
+  $(L(X),\eta(X))$ is a universal morphism from $X$ to $R$.
+
+  The dual has a similar argument. 
+\end{proof}
+
+\begin{prop}[Uniqueness of Adjoints]
+  \hypertarget{adj_unique}{}
+
+  Let $R, R_1 : \map{\CC}{\DD}{\CAT}{}$, $L, L_1: \map{\DD}{\CC}{\CAT}{}$.
+  Then \begin{enumerate}
+    \item If $(L,R)$ and $(L,R_1)$ are both adjunctions, 
+    then $R \cong R_1$ as functors. 
+    \item If $(L,R)$ and $(L_1, R)$ are both adjunctions, 
+    then $L \cong L_1$ as functors. 
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  $(1)$ Let $(L,R), (L,R_1)$ both be adjunctions. 
+  Let $f : \map{U}{V}{\CC}{}$. 
+  We have an isomorphism between the functors 
+  $\mor{-}{R(U)}{\DD}$ and $\mor{-}{R_1(U)}{\DD}$
+  for all $U \in \obj{\CC}$. 
+  By \hyperlink{yoneda}{Yoneda's lemma}, 
+  these isomorphisms are equal to $h_{\al_U}$ 
+  for some unique morphism $\al_U : \map{R(U)}{R_1(U)}{\DD}{}$.
+  So we have the following commutative diagram. 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      \mor{-}{R(U)}{\DD} \ar[r,"h_{\al_U}","\sim"{swap}] 
+        \ar[d,"h_{R(f)}"{swap}]
+      & \mor{-}{R_1(U)}{\DD} \ar[d,"h_{R_1(f)}"] \\
+      \mor{-}{R(V)}{\DD} \ar[r,"h_{\al_V}"{swap},"\sim"] 
+      & \mor{-}{R_1(V)}{\DD}
+    \end{tikzcd}
+  \end{figure}
+  Again by Yoneda, 
+  we have $R_1(f) \circ \al_U = \al_V \circ R(f)$.
+  The fact that $h_{\al_U}$ is an isomorphism implies 
+  $\al_U$ is an isomorphism. 
+  Thus $\al$ is a natural isomorphism between $R, R_1$.
+
+  $(2)$ Analogous. 
+\end{proof}
+
+\begin{rmk}
+  There is another characterisation of adjunctions.
+\end{rmk}
+
+\begin{prop}[Unit/Counit Characterisation of Adjunction]
+  \hypertarget{unit_char_adj}{}
+  
+  Let $R : \map{\CC}{\DD}{\CAT}{}$ and $L : \map{\DD}{\CC}{\CAT}{}$.
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item (Morphism Isomorphism) $(R,L)$ is an adjunction. 
+    \item (Unit-Counit) 
+    There exists $\eta : \map{\id{\DD}}{RL}{}{}$ and 
+    $\ep : \map{LR}{\id{\CC}}{}{}$ such that 
+    \begin{enumerate}
+      \item $\id{L} = \ep L \circ L \eta$,
+      that is to say for all $X \in \obj{D}$, 
+      we have the following commutative diagram. 
+      \begin{figure}[H]
+        \centering
+        \begin{tikzcd}
+          L(X) \ar[rd,"\id{L(X)}"{swap}] \ar[r,"L(\eta(X))"]
+          & LRL(X) \ar[d,"\ep(L(X))"] \\
+          & L(X)
+        \end{tikzcd}
+      \end{figure}
+      \item $\id{R} = R\ep \circ \eta R$, i.e. 
+      for all $U \in \obj{\CC}$, 
+      we have the following commutative diagram. 
+      \begin{figure}[H]
+        \centering
+        \begin{tikzcd}
+          R(U) \ar[rd,"\id{R(U)}"{swap}] \ar[r,"\eta(R(U))"] 
+          & RLR(U) \ar[d,"R(\ep(U))"] \\
+          & R(U) 
+        \end{tikzcd}
+      \end{figure}
+    \end{enumerate}
+    The above two equations are often called \emph{triangle-identities}.
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  $(1\implies 2)$
+  For all $X \in \obj{\DD}$, 
+  the adjunction isomorphism gives an isomorphism of functors
+  \[
+    \mor{L(X)}{-}{\CC} \iso \mor{X}{R(-)}{\DD}
+  \]
+  Define $\eta(X) := \id{L(X)}^\bot$. 
+  Then by \hyperlink{uni_iff_rep}{universal iff represents}, 
+  $(L(X),\eta(X))$ is a universal morphism from $X$ to $R$. 
+  We claim that $\eta : \map{\id{\DD}}{RL}{}{}$. 
+
+  Let $f : \map{X}{Y}{\DD}{}$. 
+  Then by the universal property of $(L(X),\eta(X))$,
+  we have the following commutative diagram. 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      X \ar[r,"\eta(X)"] \ar[d,"f"{swap}] & RL(X) \ar[d,"RL(f)"] \\
+      Y \ar[r,"\eta(Y)"{swap}] & RL(Y)
+    \end{tikzcd}
+  \end{figure}
+  i.e. $\eta$ is a natural transformation as desired. 
+  We similarly define $\ep(U) := \id{R(U)}^\bot$ for $U \in \obj{\CC}$
+  and see that $\ep : \map{LR}{\id{\CC}}{}{}$. 
+
+  To prove $(a)$, let $X \in \obj{\DD}$. 
+  Then \begin{align*}
+    \id{L(X)} 
+    = \brkt{\id{L(X)}^\bot}^\bot 
+    = \brkt{\eta(X)}^\bot 
+    = \ep(L(X)) \circ L(\eta(X)) 
+  \end{align*}
+  where the last equality follows from 
+  the universal property of $(RL(X),\ep(L(X)))$. 
+  Similarly for $(b)$, we have for $U \in \obj{\CC}$, 
+  \begin{align*}
+    \id{R(U)} 
+    = \brkt{\id{R(U)}^\bot}^\bot 
+    = \brkt{\ep(U)}^\bot 
+    = R(\ep(U)) \circ \eta(R(U))
+  \end{align*}
+  where the last equality is by
+  the universal property of $(LR(U),\eta(R(U)))$.
+
+  $(2\implies 1)$ 
+  Let $(X,U)\in\obj{\DD\op \times \CC}$. 
+  Since $(L(X),\eta(X))$ is supposed to be 
+  a universal morphism from $X$ to $R$, 
+  we define the adjunction map to be 
+  \begin{align*}
+    \mor{L(X)}{U}{\CC} &\overset{\bot}{\longleftrightarrow} 
+    \mor{X}{R(U)}{\DD} \\
+    f &\longmapsto R(f) \circ \eta(X) \\
+    \ep(U) \circ L(g) &\longmapsfrom g
+  \end{align*}
+  Then for $f : \map{L(X)}{U}{\CC}{}$, 
+  \begin{align*}
+    \brkt{f^\bot}^\bot 
+    &= \ep(U) \circ L(f^\bot) = \ep(U) \circ L\brkt{R(f) \circ \eta(X)} \\
+    &= \ep(U) \circ LR(f) \circ L(\eta(X)) 
+    = f \circ \ep(L(X)) \circ L(\eta(X)) = f
+  \end{align*}
+  Similarly, $\brkt{g^\bot}^\bot = g$.
+  So $\bot$ is an isomorphism at all $(X,U)$.
+  
+  It remains to show naturality. 
+  \hyperlink{nat_trans_prod_cat}{It suffices} to show that 
+  the isomorphism is natural in both components. 
+  Let $f : \map{X}{Y}{\DD\op}{}$. 
+  Then we have the following diagram. 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      \mor{L(X)}{U}{\CC} \ar[r,"\bot"] \ar[d,"h^{L(f)}"{swap}]
+      & \mor{X}{R(U)}{\DD} \ar[d,"h^f"] \\
+      \mor{L(Y)}{U}{\CC} \ar[r,"\bot"{swap}] & \mor{Y}{R(U)}{\DD}
+    \end{tikzcd}
+  \end{figure}
+  It follows from $\eta : \map{\id{\DD}}{RL}{}{}$ that the above commutes.
+  Similarly, naturality of $\ep$ implies naturality in the second component. 
+  Hence $\bot$ is a natural isomorphism as desired. 
+\end{proof}
+
+\begin{rmk}
+  The following is a special case of adjunction that is worth noting. 
+\end{rmk}
+\begin{dfn}[Galois Connection]
+  
+  Let $I, J$ be partially ordered sets. 
+  Then $I, J$ can be seen as categories. 
+  A \emph{monotone Galois connection between $I,J$} is 
+  an adjunction between $I, J$.
+  A \emph{antitone Galois connection between $I,J$} is 
+  an adjunction between $I\op, J$. 
+\end{dfn}
+\begin{rmk}
+  The \hyperlink{unit_char_adj}{unit/counit characterisation of adjunctions}
+  shows that if $(R,L)$ is a Galois connection (mono or anti) between 
+  partially ordered sets $I,J$, 
+  then $R$ and $L$ are bijective on their images. 
+\end{rmk}
+
+\begin{dfn}[Free Functors]\link{free}
+  
+\end{dfn}

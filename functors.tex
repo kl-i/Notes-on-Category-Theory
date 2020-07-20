@@ -1,0 +1,120 @@
+\begin{dfn}[Functors]\link{functors}
+  
+  Let $\CC, \DD$ be categories. 
+  Then a \emph{functor $F$ from $\CC$ to $\DD$} is defined by 
+  the following data :
+  \begin{enumerate}
+    \item A map of objects $\obj{\CC} \to \obj{\DD}$,
+    which we will denote by the same name $F$. 
+    \item A map of morphisms for all $U, V \in \obj{\CC}$, 
+    $\mor{U}{V}{\CC} \to \mor{F(U)}{F(V)}{\DD}$,
+    which we will also denote by the same name $F$. 
+    \item (Compositions are Preserved)
+    For all $f : \map{U}{V}{\CC}{}$ and $g : \map{V}{W}{\CC}{}$, 
+    $F(g \circ f) = F(g) \circ F(f)$. 
+    \item (Identity Morphisms are Preserved)
+    For all $U \in \obj{\CC}$, $F(\id{U}) = \id{F(U)}$.
+  \end{enumerate}
+\end{dfn}
+
+\begin{dfn}[Category of Categories]\hypertarget{bigcat}{}
+  
+  We define the \emph{category of categories} $\CAT$, 
+  \begin{enumerate}
+    \item $\obj{\CAT}$ consists of categories. 
+    \item For $\CC, \DD \in \obj{\CAT}$, 
+    $\mor{\CC}{\DD}{\CAT}$ consists of functors from $\CC$ to $\DD$.  
+    \item For $\CC \in \obj{\CAT}$, $\id{\CC}$ is the obvious thing.
+  \end{enumerate}
+\end{dfn}
+
+\begin{dfn}[Faithful, Full, Fully Faithful]\link{fully_faithful}
+  
+  Let $F : \map{\CC}{\DD}{\CAT}{}$.
+  Then $F$ is called 
+  \begin{enumerate}
+    \item \emph{faithful} when for all $U, V \in \obj{\CC}$,
+    $F : \mor{U}{V}{\CC} \to \mor{F(U)}{F(V)}{\DD}$ is injective. 
+    \item \emph{full} when for all $U, V \in \obj{\CC}$,
+    $F : \mor{U}{V}{\CC} \to \mor{F(U)}{F(V)}{\DD}$ is surjective.
+    \item \emph{fully faithful} when for all $U, V \in \obj{\CC}$,
+    $F : \mor{U}{V}{\CC} \to \mor{F(U)}{F(V)}{\DD}$ is bijective.
+  \end{enumerate}
+\end{dfn}
+
+\begin{prop}[Fully Faithful Functors are Injective]
+  \link{full_faith_inj}
+  
+  Let $F : \map{\CC}{\DD}{\CAT}{}$ be fully faithful,
+  $U, V \in \obj{\CC}$ such that $F(U) \iso F(V)$.
+  Then $U \iso V$. 
+\end{prop}
+\begin{proof}
+  Let $f_1 \in \DD(F(U),F(V))$ and $f_2 \in \DD(F(V),F(U))$ such that 
+  $\id{F(U)} = f_2 \circ f_1$ and $\id{F(V)} = f_1 \circ f_2$. 
+  Then $f_1, f_2$ corresponds respectively to $g_1, g_2 \in \CC(U,V), \CC(V,U)$
+  through $F$. 
+  We thus have 
+  \[ 
+    F(g_2 \circ g_1) = F(g_2) \circ F(g_1) = f_2 \circ f_1 = \id{F(U)}
+    = F(\id{U})
+  \]
+  which by $F$ fully faithful gives $g_2 \circ g_1 = \id{U}$. 
+  Similarly, $g_1 \circ g_2 = \id{V}$.
+\end{proof}
+
+\begin{dfn}[Natural Transformations]\link{natural}
+  
+  Let $F, G : \map{\CC}{\DD}{\CAT}{}$. 
+  Then a \emph{natural transformation $\eta$ from $F$ to $G$} is defined by 
+  the following data : 
+  \begin{enumerate}
+    \item For all $U \in \obj{\CC}$, $\eta_U : \map{F(U)}{G(U)}{\DD}{}$. 
+    \item (Naturality) 
+    For all $U, V \in \obj{\CC}$ and $f : \map{U}{V}{\CC}{}$, 
+    we have the following commutative diagram. \begin{figure}[H]
+      \centering
+      \begin{tikzcd}
+        F(U) \arrow[r,"\eta_U"] \arrow[d,"F(f)"{swap}] & G(U) \arrow[d,"G(f)"] \\
+        F(V) \arrow[r,"\eta_V"{swap}] & G(V) 
+      \end{tikzcd}
+    \end{figure}
+  \end{enumerate}
+\end{dfn}
+
+\begin{dfn}[Category of Functors]\link{cat_functor}
+  
+  Let $\CC, \DD \in \obj{\CAT}$. 
+  Then the \emph{category of functors from $\CC$ to $\DD$},
+  denoted $\DD^\CC$, is defined by 
+  \begin{enumerate}
+    \item $\obj{\DD^\CC} := \mor{\CC}{\DD}{\CAT}$. 
+    \item For all $F, G \in \obj{\DD^\CC}$, 
+    $\mor{F}{G}{\DD^\CC} := $
+    the set of natural transformations from $F$ to $G$. 
+    \item For all $F \in \obj{\DD^\CC}$, $\id{F}$ is the obvious thing.
+  \end{enumerate}
+\end{dfn}
+
+\begin{dfn}[Equivalence of Categories]\link{equiv}
+  
+  Let $\CC, \DD$ be categories, $F \in \CAT(\CC,\DD)$.
+  Then $F$ is called an \emph{equivalence of categories} when 
+  there exists $G \in \CAT(\DD,\CC)$ such that  
+  $G \circ F \iso \id{\CC}$ and $F\circ G \iso \id{\DD}$. 
+\end{dfn}
+
+\begin{dfn}[Essentially Surjective]\link{surj}
+  
+  Let $\CC,\DD$ be categories and $F : \map{\CC}{\DD}{\CAT}{}$. 
+  Then $F$ is called \emph{essentially surjective} when 
+  for all $X \in \obj{\DD}$, there exists $U \in \obj{\CC}$ such that 
+  $F(U) \iso X$. 
+\end{dfn}
+
+\begin{prop}[Characterisation of Equivalence of Categories]\link{char_equiv}
+  
+  Let $F : \map{\CC}{\DD}{\CAT}{}$. 
+  Then $F$ is an equivalence of categories if and only if 
+  $F$ is fully faithful and essentially surjective. 
+\end{prop}

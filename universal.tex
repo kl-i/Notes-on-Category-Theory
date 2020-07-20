@@ -1,0 +1,212 @@
+\begin{dfn}[Comma Category]\hypertarget{comma}{}
+  
+  Let $G : \map{\CC}{\DD}{\CAT}{}$ and $X \in \obj{\DD}$.
+  Then the \emph{comma category $X\darrow G$} is defined as follows. 
+  \begin{enumerate}
+    \item $\obj{X\darrow G}$ consists of pairs $(U,u)$
+    where $U \in \obj{\CC}$ and $u : \map{X}{G(U)}{\DD}{}$.
+    \item For $(U,u), (V,v) \in \obj{X\darrow G}$, 
+    $\mor{(U,u)}{(V,v)}{X\darrow G}$ consists of $f : \map{U}{V}{\CC}{}$
+    such that \begin{figure}[H]
+      \centering
+      \begin{tikzcd}
+        X \ar[r,"u"] \ar[rd,"v"{swap}] & G(U) \ar[d,"G(f)"] \\
+        & G(V)
+      \end{tikzcd}
+    \end{figure}
+  \end{enumerate}
+
+  Dually, let $F : \map{\DD}{\CC}{\CAT}{}$ and $U \in \obj{\CC}$.
+  Then the \emph{comma category $F\darrow U$} is defined as follows. 
+  \begin{enumerate}
+    \item $\obj{F\darrow U}$ consists of pairs $(X,x)$
+    where $X \in \obj{\DD}$ and $x : \map{F(X)}{U}{\CC}{}$.
+    \item For $(X,x), (Y,y) \in \obj{F\darrow U}$, 
+    $\mor{(X,x)}{(Y,y)}{X\darrow F}$ consists of $g : \map{X}{Y}{\DD}{}$
+    such that \begin{figure}[H]
+      \centering
+      \begin{tikzcd}
+        F(X) \ar[rd,"x"] \ar[d,"F(g)"{swap}]& \\
+        F(Y) \ar[r,"y"{swap}] & U
+      \end{tikzcd}
+    \end{figure}
+  \end{enumerate}
+\end{dfn}
+
+\begin{rmk}
+  Here is a special case of the comma category worth noting. 
+\end{rmk}
+
+\begin{dfn}[Over Category]\link{over_cat}
+  
+  Let $\CC$ be a category and $U \in \obj{\CC}$.
+  Then the \emph{over category $\CC\darrow U$} is defined as 
+  $\id{\CC}\darrow U$. 
+
+  Dually, the \emph{under category $U \darrow \CC$} is defined as 
+  $U\darrow \id{\CC}$.
+\end{dfn}
+
+\begin{eg}[Over and Under Categories]\link{eg:over_cat}
+  \begin{enumerate}
+    \item Let $R\in\obj{\RING}$. Then $\ALG[R] = R\darrow\RING$.
+    \item Let $X\in\obj{\TOP}$. Then we have the category of covering spaces 
+    of $X$ with is the subcategory of $\TOP\darrow X$ where 
+    objects are $(\tilde{X},p)$ with $p$ a covering map.
+  \end{enumerate}
+\end{eg}
+
+\begin{dfn}[Universal Morphism]\hypertarget{universal}{}
+  
+  Let $G : \map{\CC}{\DD}{\CAT}{}$ and $X \in \obj{\DD}$.
+  Then a \emph{universal morphism from $X$ to $G$} is the following data. 
+  \begin{enumerate}
+    \item An object $(F(X),\eta_X)$ of the comma category $X\darrow G$.
+    \item (Universal Property) For all $(V,v) \in \obj{X\darrow G}$,
+    there exists a unique morphism $\map{(F(X),\eta_X)}{(V,v)}{X\darrow G}{}$.
+  \end{enumerate}
+
+  Dually, let $F : \map{\DD}{\CC}{\CAT}{}$ and $U \in \obj{\CC}$.
+  Then a \emph{universal morphism from $F$ to $U$} is the following data. 
+  \begin{enumerate}
+    \item An object $(G(U),\ep_U)$ of the comma category $F\darrow U$.
+    \item (Universal Property)For all $(Y,y) \in \obj{F\darrow U}$,
+    there exists a unique morphism $\map{(Y,y)}{(G(U),\ep_U)}{F\darrow U}{}$.
+  \end{enumerate}
+\end{dfn}
+
+\begin{prop}[Unique up to Unique Isomorphism]\hypertarget{uniprop}{}
+  
+  Let $G : \map{\CC}{\DD}{\CAT}{}$, $X \in \obj{\DD}$, 
+  $(U,u), (V,v) \in X\darrow G$ both universal morphisms from $X$ to $G$. 
+  Then there exists a unique $f : \map{(U,u)}{(V,v)}{X\darrow G}{}$
+  and $g : \map{(V,v)}{(U,u)}{X\darrow G}{}$ such that 
+  $g \circ f = \id{(U,u)}$ and $f \circ g = \id{(V,v)}$.
+  Thus, if a universal morphism exists, 
+  we say it is \emph{unique up to unique isomorphism}.
+
+  Dually, let $F : \map{\DD}{\CC}{\CAT}{}$, $U \in \obj{\CC}$,
+  $(X,x), (Y,y) \in F\darrow U$ both universal morphisms from $F$ to $U$.
+  Then there exists a unique $f : \map{(X,x)}{(Y,y)}{F\darrow U}{}$
+  and $g : \map{(Y,y)}{(X,x)}{F\darrow u}{}$ such that 
+  $g \circ f = \id{(X,x)}$ and $f \circ g = \id{(Y,y)}$.
+\end{prop}
+\begin{proof}(Shorter proof that does not go through Yoneda).
+
+  By the universal property of $(U,u)$,
+  There exists a unique $f : \map{(U,u)}{(V,v)}{X\darrow G}{}$.
+  Similarly, there exists a unique $g : \map{(Y,y)}{(X,x)}{F\darrow u}{}$.
+  But then $g \circ f : \map{(U,u)}{(U,u)}{X\darrow G}{}$.
+  By applying the universal property of $(U,u)$ with itself,
+  we see that $\id{(U,u)}$ is the unique $\map{(U,u)}{(U,u)}{X\darrow G}{}$.
+  In particular, we have $g \circ f = \id{(U,u)}$.
+  Similarly, we have $f \circ g = \id{(V,v)}$.
+  Since $f$ and $g$ are the \emph{only} morphisms between $(U,u)$, $(V,v)$,
+  they are \emph{the} unique isomorphism between $(U,u)$ and $(V,v)$.
+\end{proof}
+
+\begin{rmk}[``Canonically Isomorphic'']
+  \hypertarget{canonical}{}
+
+  It is common in category theory and maths at large to \emph{equate} 
+  two objects that satisfy the same universal property, 
+  since they are not only isomorphic, but also isomorphic in a unique way. 
+  Some also call these \emph{canonically isomorphic}.
+\end{rmk}
+
+\begin{prop}[Isomorphic to Universal implies Universal]
+  \link{iso_uni_implies_uni}
+  
+  Let $G : \map{\CC}{\DD}{\CAT}{}$, $X \in \obj{\DD}$, 
+  $(U,u), (V,v) \in X\darrow G$ where 
+  $(U,u) \iso[X\darrow G] (V,v)$ and 
+  $(U,u)$ is a universal morphism from $X$ to $G$.
+  Then $(V,v)$ is a universal morphism from $X$ to $G$.
+
+  Dually, let $F : \map{\DD}{\CC}{\CAT}{}$, $U \in \obj{\CC}$,
+  $(X,x), (Y,y) \in F\darrow U$ where $(X,x) \iso[F\darrow U] (Y,y)$ and 
+  $(X,x)$ is a universal morphism from $F$ to $U$. 
+  Then $(Y,y)$ is a universal morphism from $F$ to $U$. 
+\end{prop}
+\begin{proof}
+  Let $f : \map{(U,u)}{(V,v)}{X\darrow G}{\sim}$.
+  Let $(W,w)\in\obj{X\darrow G}$. 
+  Then $f$ induces a bijection between $\mor{(U,u)}{(W,w)}{X\darrow G}$
+  and $\mor{(V,v)}{(W,w)}{X\darrow G}$. 
+  Since the former is singleton, so is the latter. 
+
+  The dual has a similar argument. 
+\end{proof}
+
+% \begin{proof}
+%  By \hyperlink{uni_iff_rep}{universal iff represents},
+%  let $\al : \map{h^U}{\mor{X}{G(\star)}{\DD}}{\SET^\CC}{\sim}$
+%  and $\be : \map{h^V}{\mor{X}{G(\star)}{\DD}}{\SET^\CC}{\sim}$ 
+%  with $\al_{U}(\id{U}) = u$ and $\be_V(\id{V}) = v$.
+%  Then $\be\inv \circ \al$ and $\al\inv \circ \be$ are 
+%  natural isomorphisms between $h^U$ and $h^V$.
+%  So by \hyperlink{yoneda}{Yoneda's lemma}, 
+%  there exists unique $f : \map{U}{V}{\CC}{}$ and $g : \map{V}{U}{\CC}{}$
+%  such that the following diagram commutes. 
+%  \begin{figure}[H]
+%    \centering
+%    \begin{tikzcd}[sep = large]
+%      \mor{X}{G(\star)}{\DD} 
+%      & h^V \ar[l,"\be"{swap},"\sim"] 
+%        \ar["h^f",ld,rightharpoonup,xshift=1mm,yshift=-1mm] \\
+%      h^U \ar[u,"\al","\sim"{swap}] 
+%        \ar["h^g",ru,rightharpoonup] 
+%      &  
+%    \end{tikzcd}
+%  \end{figure}
+%  Since $h^{\id{U}} = h^f \circ h^g = h^{g \circ f}$,
+%  applying \hyperlink{yoneda}{Yoneda's lemma} again, 
+%  we obtain $g \circ f = \id{U}$, and thus $g \circ f = \id{(U,u)}$.
+%  Similarly, we have $f \circ g = \id{(V,v)}$.
+%  We claim that for any 
+%  $f : \map{U}{V}{\CC}{}$ and $g : \map{V}{U}{\CC}{}$,
+%  they make the above diagram commute if and only if 
+%  $f : \map{(U,u)}{(V,v)}{X\darrow G}{}$ and 
+%  $g : \map{(V,v)}{(U,u)}{X\darrow G}{}$.
+%  This shows that $f, g$ are as desired. 
+%
+%  Since the arguments are analogous, 
+%  we just prove it for $f$.
+%  If the above diagram commutes for $f$,
+%  then $v = \be_V(\id{V}) = \al_V \circ \brkt{h^f}_V (\id{V})
+%  = \al_V(f) = G(f) \circ u$ as desired. 
+%  Now suppose $v = G(f) \circ u$.
+%  To show $\al \circ h^f = \be$, 
+%  let $W \in \obj{\CC}$ and $g \in h^V(W)$.
+%  Consider the following diagram. 
+%  \begin{figure}[H]
+%    \centering
+%    \begin{tikzcd}[sep = huge]
+%      \mor{X}{G(W)}{\DD}
+%      & h^V(W) \ar["\be_W"{swap},l] \ar["\brkt{h^f}_W"{near end},ld]
+%      & \\
+%      h^U(W) \ar["\al_W",u]
+%      & \mor{X}{G(V)}{\DD} \ar["\mor{X}{G(g)}{\DD}"{swap,near start},lu] 
+%      & h^V(V) \ar["h^V(g)"{swap},lu] \ar["\be_V"{swap},l] 
+%        \ar["\brkt{h^f}_V",ld] \\
+%      & h^U(V) \ar["h^U(g)",lu] \ar["\al_V",u]
+%      & 
+%    \end{tikzcd}
+%  \end{figure}
+%  Everything except the triangles commute. 
+%  From this, we compute \begin{align*}
+%    \be_W(g) 
+%    &= \be_W \circ h^V(g)\brkt{\id{V}}
+%      = \mor{X}{G(g)}{\DD} \circ \be_V \brkt{\id{V}} 
+%      = \mor{X}{G(g)}{\DD}\brkt{v} \\
+%    &= \mor{X}{G(g)}{\DD} \brkt{G(f) \circ u}
+%      = \mor{X}{G(g)}{\DD} \circ \al_V(f) 
+%      = \mor{X}{G(g)}{\DD} \circ \al_V \circ \brkt{h^f}_V \brkt{\id{V}} \\
+%    &= \al_W \circ h^U(g) \circ \brkt{h^f}_V \brkt{\id{V}}
+%      = \al_W \circ \brkt{h^f}_W \circ h^F(g) \brkt{\id{V}} 
+%      = \al_W \circ \brkt{h^f}_W \brkt{g}
+%  \end{align*}
+%  Thus $\be_W = \al_W \circ \brkt{h^f}_W$,
+%  and hence $\be = \al \circ \brkt{h^f}$.
+%  This concludes the proof.
+% \end{proof}

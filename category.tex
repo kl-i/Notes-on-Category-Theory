@@ -1,0 +1,144 @@
+\begin{dfn}[Categories]\link{cat}
+  
+  A \emph{category $\CC$} is defined by the following data : 
+  \begin{enumerate}
+    \item A set of \emph{objects}, $\obj{\CC}$. 
+    \item For every $U, V \in \obj{\CC}$, 
+    a set of \emph{$\CC$-morphisms} from $U$ to $V$,
+    denoted $\mor{U}{V}{\CC}$.
+    We denote $f : \map{U}{V}{\CC}{}$ for $f \in \mor{U}{V}{\CC}$. 
+    \item For every $U, V, W \in \obj{\CC}$, 
+    $f : \map{U}{V}{\CC}{}$ and $g : \map{V}{W}{\CC}{}$, 
+    a $\CC$-morphism called the \emph{composition of $f$ with $g$},
+    denoted $g \circ f : \map{U}{W}{\CC}{}$.
+    \item Associativity of $\circ$.
+    \item For every $U \in \obj{\CC}$, 
+    an \emph{identity morphism} $\id{U} : \map{U}{U}{\CC}{}$.
+    \item For all $U, V, W \in \obj{\CC}$, 
+    $f : \map{U}{V}{\CC}{}$ and $g : \map{W}{U}{\CC}{}$, 
+    we have $f \circ \id{U} = f$ and $\id{U} \circ g = g$. 
+  \end{enumerate}
+\end{dfn}
+
+\begin{dfn}[Isomorphisms]\link{iso}
+  
+  Let $\CC$ be a category, $U, V \in \obj{\CC}$, $f : \map{U}{V}{\CC}{}$.
+  Then $f$ is called an \emph{isomorphism} when 
+  there exists $g : \map{V}{U}{\CC}{}$ such that 
+  $g \circ f = \id{U}$ and $f \circ g = \id{V}$.
+  In this case, we denote $f : \map{U}{V}{\CC}{\sim}$.
+  When there exists an isomorphism from $U$ to $V$, 
+  we say they are \emph{isomorphic} and write $U \iso V$. 
+\end{dfn}
+
+\begin{dfn}[Subcategories]\link{subcat}
+  
+  Let $\CC,\DD$ be categories. 
+  Then $\DD$ is called a \emph{subcategory of $\CC$} when 
+  $\obj{\DD} \subs \obj{\CC}$ and 
+  for all $U,V \in \obj{\DD}$, $\mor{U}{V}{\DD} \subs \mor{U}{V}{\CC}$.
+\end{dfn}
+
+\begin{eg}[Standard Categories]\link{eg:cat}~
+  \begin{enumerate}
+    \item $\SET$ denotes the \emph{category of sets}, where 
+    $\obj{\SET}$ contains sets and for $U, V \in \obj{\SET}$, 
+    $\SET(U,V)$ is the set of maps from $U$ to $V$. 
+    \item $\TOP$ denotes the \emph{category of topological spaces}, where
+    $\obj{\TOP}$ contains topological spaces and for $U, V \in \obj{\TOP}$, 
+    $\TOP(U,V)$ is the set of continuous maps from $U$ to $V$. 
+    $\TOP$ is a subcategory of $\SET$. 
+    \item The \emph{category of groups} $\GRP$ has 
+    $\obj{\GRP}$ containing groups and 
+    $\GRP(U,V)$ containing group homomorphisms from $U$ to $V$. 
+    $\GRP$ is a subcategory of $\SET$.  
+    \item The \emph{category of abelian groups} $\AB$ has 
+    $\obj{\AB}$ containing abelian groups and 
+    $\AB(U,V)$ containing group homomorphisms from $U$ to $V$. 
+    $\AB$ is a subcategory of $\GRP$. 
+    \item The \emph{category of rings} $\RING$ has 
+    $\obj{\RING}$ containing rings and 
+    $\RING(U,V)$ containing ring homomorphisms from $U$ to $V$.
+    $\RING$ is a subcategory of $\SET$. 
+    \item The \emph{category of commutative rings} $\CRING$ has 
+    $\obj{\CRING}$ containing commutative rings and 
+    $\CRING(U,V)$ containing ring homomorphisms from $U$ to $V$.
+    $\CRING$ is a subcategory of $\RING$. 
+    \item Let $R$ be a commutative ring. 
+    Then the \emph{category of $R$-modules} $\MOD$ has 
+    $\obj{\MOD}$ containing $\R$-modules and 
+    $\MOD(U,V)$ contains $R$-linear maps from $U$ to $V$.
+    This is a subcategory of $\AB$. 
+    \item Let $R$ be a commutative ring. 
+    Then the \emph{category of $R$-algebras} $\ALG$ has 
+    $\obj{\ALG}$ containing pairs $(S,\si)$ where $\si : \map{R}{S}{\CRING}{}$.
+    $\ALG((U,u),(V,v))$ contains $f : \map{U}{V}{\CRING}{}$ such that 
+    $f \circ u = v$. 
+  \end{enumerate}
+\end{eg}
+
+\begin{eg}[Preordered Sets as Categories]\link{eg:cat_ord}
+  
+  Let $I$ be a set, $\leq$ a relation on $I$. 
+  Then $(I,\leq)$ is called a \emph{preordered set} when 
+  $\leq$ satisfies all of the following : 
+  \begin{enumerate}
+    \item (Reflexivity) For all $i \in I$, $i \leq i$. 
+    \item (Transitivity) For all $i, j, k \in I$, 
+    $i \leq j$ and $j \leq k$ implies $i \leq k$. 
+  \end{enumerate}
+  If $(I,\leq)$ is a preordered set where $\leq$ is clear, 
+  we abbreviate to $I$.
+
+  Let $I$ be a preordered set. 
+  Then we can turn $I$ into a category as follows : 
+  \begin{enumerate}
+    \item $\obj{I}$ is $I$. 
+    \item For $i, j \in \obj{I}$, $I(i,j)$ is 
+    singleton when $i \leq j$ and empty otherwise.  
+  \end{enumerate}
+
+  Things get meta. 
+  We can form the \emph{category of preordered sets} $\ORD$ where 
+  $\obj{\ORD}$ contains preoredered sets and 
+  $\ORD(I,J)$ contains $f : \map{I}{J}{\SET}{}$ such that 
+  for all $i, j \in I$, $i \leq j$ implies $f(i) \leq f(j)$.
+\end{eg}
+
+\begin{eg}[Category of Partially Ordered Sets]\link{eg:cat_poset}
+  
+  Let $I \in \obj{\ORD}$. 
+  Then $I$ is called a \emph{partially ordered set} when 
+  $\leq$ is \emph{antisymmetric}, i.e.
+  for all $i, j \in I$, $i \leq j$ and $j \leq i$ implies $i = j$. 
+  We thus have the \emph{category of partially ordered sets} $\POSET$ where 
+  $\obj{\POSET}$ contains partially ordered sets and 
+  $\POSET(I,J) = \ORD(I,J)$. 
+  We see that $\POSET$ is a subcategory of $\ORD$.
+\end{eg}
+
+\begin{eg}[Partially Ordered Sets]\link{eg:poset}~
+  \begin{enumerate}
+    \item Let $X$ be a set. Then its powerset $2^X \in \obj{\POSET}$. 
+    \item Let $X$ be a topological space. 
+    Then the set of its open sets $\mathrm{Open}\,X$ is a partially ordered set.
+    \item Let $G$ be a group. 
+    Then the set of its subgroups is in $\obj{\POSET}$.
+    \item Let $R$ be a commutative ring and $M$ be an $R$-module.
+    Then the set of $R$-submodules of $M$ is in $\obj{\POSET}$.
+    \item Let $R$ be a commutative ring and $(S,\si)$ an $R$-algebra. 
+    Then the set of all $R$-subalgebras of $S$ is in $\obj{\POSET}$. 
+    \item Consider the relation on $\N$ that is $a \dvd b$. 
+    This is a partial order on $\N$. 
+  \end{enumerate}
+\end{eg}
+
+\begin{eg}[A Group as a Category]\link{eg:cat_group}
+  
+  A group $G$ is equivalent to 
+  a category $G$ where there is only one object $\bullet$ and 
+  all morphisms are isomorphisms. 
+
+  A direct generalization is a \emph{groupoid} : 
+  a category where every morphism is an isomorphism. 
+\end{eg}
