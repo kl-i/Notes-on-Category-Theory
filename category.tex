@@ -20,6 +20,12 @@
   \end{enumerate}
 \end{dfn}
 
+\begin{rmk}
+Morphisms in a category do \emph{not} have to be functions.
+See the example of preordered sets as categories at
+\linkto{eg:cat_ord}{end of this section}.
+\end{rmk}
+
 \begin{dfn}[Isomorphisms]\link{iso}
   
   Let $\CC$ be a category, $U, V \in \obj{\CC}$, $f : \map{U}{V}{\CC}{}$.
@@ -66,7 +72,7 @@
     $\CRING$ is a subcategory of $\RING$. 
     \item Let $R$ be a commutative ring. 
     Then the \emph{category of $R$-modules} $\MOD$ has 
-    $\obj{\MOD}$ containing $\R$-modules and 
+    $\obj{\MOD}$ containing $R$-modules and 
     $\MOD(U,V)$ contains $R$-linear maps from $U$ to $V$.
     This is a subcategory of $\AB$. 
     \item Let $R$ be a commutative ring. 
@@ -119,7 +125,7 @@
 
 \begin{eg}[Partially Ordered Sets]\link{eg:poset}~
   \begin{enumerate}
-    \item Let $X$ be a set. Then its powerset $2^X \in \obj{\POSET}$. 
+    \item Let $X$ be a set. Then its powerset $(2^X,\leq) \in \obj{\POSET}$. 
     \item Let $X$ be a topological space. 
     Then the set of its open sets $\mathrm{Open}\,X$ is a partially ordered set.
     \item Let $G$ be a group. 
