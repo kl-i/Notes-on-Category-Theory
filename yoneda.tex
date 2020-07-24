@@ -79,40 +79,140 @@
   via $s \mapsto s_U(\id{U})$.
 
 \end{prop}
+%\begin{proof}
+%
+%  We first prove the general statement.
+%  Let $U \in \obj{\CC}$ and $F \in \obj{\SET^{\CC\op}}$.
+%  To show injectivity, let $s, t \in \mor{h_U}{F}{\SET^{\CC\op}}$ and
+%  assume $s_U(\id{U}) = t_U(\id{U})$. 
+%  To show $s = t$, let $W \in \obj{\CC}$, $f \in h_U(W)$ and
+%  consider the following commutative diagram, 
+%  \begin{figure}[H]
+%    \centering
+%    \begin{tikzcd}
+%      h_U(U) \arrow[rrr,"s_U"] \arrow[ddd,"h_U(f)"{swap}] 
+%      & 
+%      & 
+%      & F(U) \arrow[ddd,"F(f)"] 
+%      \\
+%      & \id{U} \ar[r,mapsto] \ar[d,mapsto]& s_U(\id{U}) \ar[d,mapsto]& \\
+%      & f \ar[r,mapsto] & s_W(f) = F(f)(s_U(\id{U})) & \\
+%      h_U(W) \arrow[rrr,"s_W"{swap}] 
+%      & 
+%      & 
+%      & F(W) 
+%    \end{tikzcd}
+%  \end{figure}
+%  By considering an analogous for $t$,
+%  we get $s_W(f) = t_W(f)$.
+%  So $s_W = t_W$, and hence $s = t$. 
+%  To show surjectivity, let $x \in F(U)$. 
+%  Define $s \in \mor{h_U}{F}{\SET^{\CC\op}}$ by 
+%  for all $V \in \obj{\CC}$, \[
+%    s_V : f \in h_U(V) \mapsto F(f)(x) \in F(V)
+%  \]
+%  Then by the above diagram, $s_U(\id{U}) = x$. 
+%  This proves the desired bijection.
+%
+%  For naturality in the first component,
+%  let $f : \map{U}{V}{\CC}{}$.
+%  Then we have the following commutative diagram. 
+%  \begin{figure}[H]
+%    \centering
+%    \begin{tikzcd}
+%      \mor{h_U}{F}{\SET^{\CC\op}} \ar[rrr]
+%      & & & F(U) \\
+%      & s\circ h^f \ar[r,mapsto]
+%      & (s\circ h^f)_U (\id{U}) 
+%        = s_V(f)
+%        = F(f) \circ s_V (\id{V}) & \\
+%      & s \ar[u,mapsto] \ar[r,mapsto] & s_V(\id{V}) \ar[u,mapsto] & \\
+%      \mor{h_V}{F}{\SET^{\CC\op} } \ar[uuu,"(\star\circ h^f)"] \ar[rrr,""]
+%      & & & F(V) \ar[uuu,"F(f)"{swap}]
+%    \end{tikzcd}
+%  \end{figure}
+%  For naturality in the second component, 
+%  let $\al : \map{F}{G}{\SET^{\CC\op}}{}$.
+%  Then we have the following commutative diagram.
+%  \begin{figure}[H]
+%    \centering
+%    \begin{tikzcd}
+%      \mor{h_U}{F}{\SET^{\CC\op}} \ar[rrr]
+%        \ar[ddd,"(\al\circ \star)"{swap}]
+%      & & & F(U) \ar[ddd,"\al_U"] \\
+%      & s \ar[r,mapsto] \ar[d,mapsto]
+%      & s_U (\id{U}) \ar[d,mapsto] & \\
+%      & \al\circ s \ar[r,mapsto] 
+%      & (\al\circ s)_U (\id{U}) = \al_U \circ s_U(\id{U})
+%      & \\
+%      \mor{h_U}{G}{\SET^{\CC\op} } \ar[rrr,""]
+%      & & & G(U)
+%    \end{tikzcd}
+%  \end{figure}
+%  We thus have the desired result. 
+%
+%  To show $h_\star$ is fully faithful, 
+%  let $U, V \in \obj{\CC}$ and apply the above to $F := h_V$.
+%\end{proof}
 \begin{proof}
-
-  We first prove the general statement.
-  Let $U \in \obj{\CC}$ and $F \in \obj{\SET^{\CC\op}}$.
-  To show injectivity, let $s, t \in \mor{h_U}{F}{\SET^{\CC\op}}$ and
-  assume $s_U(\id{U}) = t_U(\id{U})$. 
-  To show $s = t$, let $W \in \obj{\CC}$, $f \in h_U(W)$ and
-  consider the following commutative diagram, 
+  We first prove the general statement. 
+  Let $U \in \obj{\CC}, F \in \obj{\SET^{\CC\op}}$.
+  Given an element $s \in F(U)$,
+  we are tasked with constructing a natural transformation $h_U \to F$.
+  For $V \in \CC$ we want to map elements 
+  $f \in h_U(V)$ to some element of $F(V)$.
+  Well, $f$ is a morphism from $V$ to $U$,
+  so $F(f)$ is a morphism from $F(U)$ to $F(V)$,
+  and we are given an element $s \in F(U)$.
+  So define $\al^s_V : h_U(V) \to F(V) := f \mapsto F(f)(s)$.
+  For the collection of $\al^s_V$ to form a natural transformation,
+  we need naturality. 
+  So given $f \in \CC(V,W)$,
+  we need the following diagram to commute : 
+  \begin{cd}
+    h_U(W) \ar[d,"h_U(f)"] \ar[r,"\al^s_W"] & F(W) \ar[d,"F(f)"]\\
+    h_U(V) \ar[r,"\al^s_V"] & F(V)
+  \end{cd}
+  For $g \in h_U(W)$, then we have as desired \[
+    \al^s_V \circ h_U(f) (g) = \al^s_V(g \circ f)
+    = F(g \circ f) (x) = F(f) \circ F(g) (x)
+    = F(f) \circ \al^s_W (g)
+  \]
+  So $\al^s : h_U \to F$ is a natural transformation.
+  
+  Note that we can recover $s$ from $\al^s$ by $\al^s_U(\id{U}) = s$.
+  This motivates us to define the inverse map by 
+  $\al \in \SET^{\CC\op}(h_U,F) \mapsto \al_U(\id{U})$.
+  To show these two maps are indeed inverses, 
+  first consider the following diagram where 
+  $\al : h_U \to F$ is a natural tranformation,
+  $W \in \obj{\CC}$ and $f \in h_U(W)$ : 
   \begin{figure}[H]
     \centering
     \begin{tikzcd}
-      h_U(U) \arrow[rrr,"s_U"] \arrow[ddd,"h_U(f)"{swap}] 
+      h_U(U) \arrow[rrr,"a\l_U"] \arrow[ddd,"h_U(f)"{swap}] 
       & 
       & 
       & F(U) \arrow[ddd,"F(f)"] 
       \\
-      & \id{U} \ar[r,mapsto] \ar[d,mapsto]& s_U(\id{U}) \ar[d,mapsto]& \\
-      & f \ar[r,mapsto] & s_W(f) = F(f)(s_U(\id{U})) & \\
-      h_U(W) \arrow[rrr,"s_W"{swap}] 
+      & \id{U} \ar[r,mapsto] \ar[d,mapsto]& \al_U(\id{U}) \ar[d,mapsto]& \\
+      & f \ar[r,mapsto] & \al_W(f) = F(f)(\al_U(\id{U})) & \\
+      h_U(W) \arrow[rrr,"\al_W"{swap}] 
       & 
       & 
       & F(W) 
     \end{tikzcd}
   \end{figure}
-  By considering an analogous for $t$,
-  we get $s_W(f) = t_W(f)$.
-  So $s_W = t_W$, and hence $s = t$. 
-  To show surjectivity, let $x \in F(U)$. 
-  Define $s \in \mor{h_U}{F}{\SET^{\CC\op}}$ by 
-  for all $V \in \obj{\CC}$, \[
-    s_V : f \in h_U(V) \mapsto F(f)(x) \in F(V)
-  \]
-  Then by the above diagram, $s_U(\id{U}) = x$. 
-  This proves the desired bijection.
+  The above diagram commutes by naturality of $\al$.
+  What it shows is that $\al_W$ is completely determined by $\al_U(\id{U})$,
+  and hence $\al$ is completely determined by $\al_U(\id{U})$.
+  This proves one side of the inverse situation. 
+  The other side is clear.
+  Thus we have a bijection between $\SET^{\CC\op}(h_U,F) \iso F(U)$.
+
+  At this point, we can already get $h_\star$ fully faithful by
+  applying the above bijection to $F = h_\star$ itself and noting
+  the bijection turns $f \in h_V(U)$ into $h_f$. 
 
   For naturality in the first component,
   let $f : \map{U}{V}{\CC}{}$.
@@ -122,47 +222,44 @@
     \begin{tikzcd}
       \mor{h_U}{F}{\SET^{\CC\op}} \ar[rrr]
       & & & F(U) \\
-      & s\circ h^f \ar[r,mapsto]
-      & (s\circ h^f)_U (\id{U}) 
-        = s_V(f)
-        = F(f) \circ s_U (\id{U}) & \\
-      & s \ar[u,mapsto] \ar[r,mapsto] & s_U(\id{U}) \ar[u,mapsto] & \\
+      & \al\circ h^f \ar[r,mapsto]
+      & ( \al\circ h^f)_U (\id{U}) 
+        = \al_V(f)
+        = F(f) \circ \al_V (\id{V}) & \\
+      & \al \ar[u,mapsto] \ar[r,mapsto] & \al_V(\id{V}) \ar[u,mapsto] & \\
       \mor{h_V}{F}{\SET^{\CC\op} } \ar[uuu,"(\star\circ h^f)"] \ar[rrr,""]
       & & & F(V) \ar[uuu,"F(f)"{swap}]
     \end{tikzcd}
   \end{figure}
   For naturality in the second component, 
-  let $\al : \map{F}{G}{\SET^{\CC\op}}{}$.
+  let $\phi : \map{F}{G}{\SET^{\CC\op}}{}$.
   Then we have the following commutative diagram.
   \begin{figure}[H]
     \centering
     \begin{tikzcd}
       \mor{h_U}{F}{\SET^{\CC\op}} \ar[rrr]
-        \ar[ddd,"(\al\circ \star)"{swap}]
-      & & & F(U) \ar[ddd,"\al_U"] \\
-      & s \ar[r,mapsto] \ar[d,mapsto]
-      & s_U (\id{U}) \ar[d,mapsto] & \\
-      & \al\circ s \ar[r,mapsto] 
-      & (\al\circ s)_U (\id{U}) = \al_U \circ s_U(\id{U})
+        \ar[ddd,"(\phi\circ \star)"{swap}]
+      & & & F(U) \ar[ddd,"\phi_U"] \\
+      & \al \ar[r,mapsto] \ar[d,mapsto]
+      & \al_U (\id{U}) \ar[d,mapsto] & \\
+      & \phi\circ \al \ar[r,mapsto] 
+      & (\phi\circ \al)_U (\id{U}) = \phi_U \circ \al_U(\id{U})
       & \\
       \mor{h_U}{G}{\SET^{\CC\op} } \ar[rrr,""]
       & & & G(U)
     \end{tikzcd}
   \end{figure}
   We thus have the desired result. 
-
-  To show $h_\star$ is fully faithful, 
-  let $U, V \in \obj{\CC}$ and apply the above to $F := h_V$.
 \end{proof}
 
 \begin{dfn}[Representable Functors]
   \hypertarget{rep}{}
   
-  Let $G : \map{\CC}{\DD}{\CAT}{}$ be a covariant functor. 
+  Let $G : \map{\CC}{\SET}{\CAT}{}$ be a covariant functor. 
   Then a \emph{representation of $G$} is a $(U,u) \in h^\star\darrow G$
   where $u : \map{h^\star}{G}{\SET^\CC}{\sim}$.
 
-  Dually, let $F : \map{\CC\op}{\DD}{}{}$ be a contravariant functor. 
+  Dually, let $F : \map{\CC\op}{\SET}{}{}$ be a contravariant functor. 
   Then a \emph{representation of $F$} is a $(U,u) \in h_\star\darrow F$
   where $u : \map{h_\star}{F}{\SET^{\CC\op}}{\sim}$.
 

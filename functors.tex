@@ -108,9 +108,11 @@
 \begin{dfn}[Essentially Surjective]\link{surj}
   
   Let $\CC,\DD$ be categories and $F : \map{\CC}{\DD}{\CAT}{}$. 
-  Then $F$ is called \emph{essentially surjective} when 
-  for all $X \in \obj{\DD}$, there exists $U \in \obj{\CC}$ such that 
-  $F(U) \iso X$. 
+  The \emph{essential image of $F$} is defined as
+  the set of $X \in \DD$ such that 
+  there exists $U \in \CC$ where $F(U) \iso X$.
+  $F$ is called \emph{essentially surjective} when
+  its essential image is the whole of $\DD$.
 \end{dfn}
 
 \begin{prop}[Characterisation of Equivalence of Categories]\link{char_equiv}
@@ -119,3 +121,335 @@
   Then $F$ is an equivalence of categories if and only if 
   $F$ is fully faithful and essentially surjective. 
 \end{prop}
+\begin{proof}~
+  $(\implies)$
+  Let $G : \map{\DD}{\CC}{\CAT}{}$, $\ep : \map{\id{\CC}}{G \circ F}{}{\sim}$,
+  $\eta : \map{F \circ G}{\id{\DD}}{}{\sim}$.
+  It is clear that $F$ is essentially surjective. 
+  For faithful, let $f, g \in \CC(U,V)$ such that 
+  $F(f) = F(g)$.
+  Then by naturality of $\ep$, we have the following commutative diagram : 
+  \begin{cd}
+    U \ar[r,"f"] \ar[d,"\ep_U"] & V \ar[d,"\ep_V"] \\
+    GF(U) \ar[r,"GF(f)"] & GF(V)
+  \end{cd}
+  Then $f = g$ follows from $\ep_U, \ep_V$ being isomorphisms. 
+
+  For fullness, let $f \in \DD(F(U), F(V))$.
+  The guess is that by mapping $f$ back to $\CC$, 
+  we get the morphism that maps to $f$.
+  That is, we claim that $F(\ep_V\inv \circ G(f) \circ \ep_U) = f$.
+  Since the arguments of the above paragraph also applies to $G$,
+  we have $G$ is faithful and hence 
+  it suffices to show that $GF(\ep_V\inv \circ G(f) \circ \ep_U) = G(f)$.
+  We first show that perhaps unsurprisingly, 
+  $GF(\ep_V\inv) = \ep_{GF(V)}\inv$. 
+  By functoriality of $GF$, it suffices to show that
+  $GF(\ep_V) = \ep_{GF(V)}$. 
+  This follows from $\ep_V$ being an isomorphism and 
+  the following commutative diagram due to
+  the naturality of $\ep$ : 
+  \begin{cd}
+    V \ar[r,"\ep_V"] \ar[d,"\ep_V"]& GF(V) \ar[d,"GF(\ep_V)"] \\
+    GF(V) \ar[r,"\ep_{GF(V)}"] & GFGF(V) 
+  \end{cd}
+  It now remains to show $GF(G(f) \circ \ep_U) = \ep_{GF(V)} \circ G(f)$.
+  This follows from naturality of $\ep$ and $\ep_U$ being an isomorphism : 
+  \begin{cd}
+    U \ar[r,"G(f) \circ \ep_U"] \ar[d,"\ep_U"] & GF(V) \ar[d,"\ep_{GF(V)}"]
+    \\
+    GF(U) \ar[r,"GF(G(f) \circ \ep_U)"{swap,yshift = -1mm}] & GFGF(V)
+  \end{cd}
+
+  $(\limplies)$
+  Using the axiom of choice, 
+  for each $X \in \obj{\DD}$, let $G(X) \in \obj{\CC}$ and 
+  $\eta_X \in \DD(FG(X), X)$ such that $\eta_X$ is an isomorphism. 
+  For $f \in \DD(X, Y)$, 
+  by full faithfulness of $F$ let $G(f) \in \CC(G(X),G(Y))$ be
+  the unique morphism such that $FG(f) = \eta_Y\inv \circ f \eta_X$. 
+  It then follows from uniqueness of the above morphisms and 
+  functoriality of $F$ that 
+  $G$ is a functor. 
+  Note that by construction, 
+  the collection of $\eta_X$ gives a natural isomorphism 
+  $\eta : F \circ G \to \id{\DD}$.
+  
+  It remains to give a natural isomorphism $\ep : \id{\CC} \to G \circ F$.
+  For $U \in \obj{\CC}$, we are looking for a morphism $U \to GF(U)$.
+  Feeling optimistic, we use full and faithfulness of $F$ to define 
+  $\ep_U \in \CC(U, GF(U))$ as the unique morphism such that 
+  $F(\ep_U) = \eta_{F(U)} \inv$. 
+  From $\eta_{F(U)}$ being an isomorphism and full faithfulness of $F$, 
+  it follows that $\ep_U$ is also an isomorphism. 
+  Finally, to check naturality of $\ep$, 
+  let $f \in \CC(U,V)$.
+  We need $\ep_V \circ f = GF(f) \circ \ep_U$.
+  But since $F$ is faithful, 
+  it suffices that $F$ applied to these morphisms are equal. 
+  Well, indeed we have it \[
+    F(\ep_V \circ f) = \eta_{F(V)}\inv \circ F(f)
+    = \eta_{F(V)}\inv \circ F(f) \circ \eta_U \circ \eta_U\inv 
+    = \eta_{F(V)}\inv \circ F(f) \circ \eta_U \circ F(\ep_U)
+    = F(GF(f) \circ \ep_U)
+  \]
+\end{proof}
+
+\begin{eg}[Functors and Natural Transformations]\link{eg:functors}
+  
+  The following is but a small sample of the vast sea of functors that
+  appear in mathematics. 
+  There is no need to ``memorize'' these.
+  You will spot them when they appear. 
+
+  The first list gives constructions of ``structures''
+  between subcategories of sets. 
+  The theme is that these are all 
+  \linkto{free}{free functors} adjoint to some kind of forgetful functor.
+  Details of this are explained in the section on adjunctions. 
+  \begin{itemize}
+    \item Forgetful functor
+    Given any subcategory $\CC$ of $\DD$, 
+    there is an ``obvious'' functor from $\CC$ to $\DD$ that maps 
+    $\obj{\CC} \to \obj{\DD}$ by doing nothing and 
+    morphisms in $\CC$ to morphisms in $\DD$ by doing nothing. 
+    Functors of this form are often called 
+    the \emph{forgetful functor}.
+
+    Here is a graph showing subcategories of set and their ``inclusions''.
+    \begin{cd}
+      \SET & 
+      \GRP \ar[l] & 
+      \AB \ar[l] & 
+      \MOD(R) \ar[l] \\
+      \TOP \ar[u] & 
+      \RING \ar[u] \ar[ur] & 
+      \CRING \ar[u] \ar[l] & 
+      \ALG(R) \ar[l] \ar[u]
+    \end{cd}
+    in the diagram, $R$ is a commutative ring with unity. 
+    The maps from $\RING, \CRING$ into $\AB$ take 
+    (commutative) rings to their underlying abelian groups. 
+
+    \item (Free Group)
+    For each set $S$, the free group over $S$ is an object $\<S\> \in \GRP$
+    the comes with a morphism of sets $\lift{}{} : S \to \<S\>$ such that
+    for any group $G$ and $\phi \in \SET(S,G)$,
+    there is a unique morphism of groups $\<\phi\> \in \GRP(\<S\>,G)$ such that
+    $\<\phi\> \circ \lift{}{} = \phi$.
+    This makes $G \mapsto \<G\>$ into a functor from $\SET$ to $\GRP$.
+
+    \item (Free Module over a Ring)
+    Let $A$ be a commutative ring. 
+    For each set $S$, 
+    the free $A$-module over $S$ is an object $A^{\oplus S} \in \MOD(A)$ 
+    that comes with a morphism of sets $\lift{}{} : S \to A^{\oplus S}$
+    such that for any $A$-module $M$ and $f \in \SET(S,M)$,
+    there is a unique $A$-linear map 
+    $A^{\oplus f} : \oplus_{s \in S} A \to M$ such that 
+    $A^{\oplus f} \circ \lift{}{} = f$. 
+    This makes $S \mapsto A^{\oplus S}$ into a functor 
+    from $\SET$ to $\MOD(A)$.
+
+    In particular, for a fixed $M \in \MOD(A)$ and $S \subs M$,
+    $S$ is called respectively linearly independent, spanning, a basis
+    if and only if $A^{\oplus f}$ is injective, surjective, an isomorphism.
+
+    Note that the above covers $\AB$, since 
+    $\AB$ is nothing more than $\MOD(\Z)$.
+
+    \item (Free Algebra over a Ring)
+    Let $K$ be a commutative ring. 
+    For each set $S$, 
+    the free $K$-algebra over $S$ is an object $K[S] \in \ALG(K)$
+    that comes with a morphism of sets $\lift{}{} : S \to K[S]$ such that
+    for any $K$-algebra $A$ and $a \in \SET(S,A)$,
+    there exists a unique $K$-algebra morphism $ev_a : K[S] \to A$
+    such that $ev_a \circ \lift{}{} = a$.
+    This makes $S \mapsto K[S]$ into a functor 
+    from $\SET$ to $\ALG(K)$.
+
+    These free algebras are not unfamiliar.
+    For instance, 
+    the polynomial ring in $K[T]$ over $K$ is
+    precisely $K[\set{*}]$ where $\set{*}$ is the singleton set.
+    For any $K$-algebra $A$,
+    a set morphism $a : \set{*} \to A$ is nothing more than
+    an element in $A$.
+    So as suggested by the notation, $ev_a$ is precisely evaluation 
+    of polynomials $f \mapsto f(a)$ where we have identified 
+    the set morphism $a$ with the unique element in its image. 
+    Generalizing, for an arbitrary set $S$,
+    $K[S]$ is precisely the $K$-algebra of polynomials 
+    with variables indexed by $S$. 
+    In particular, for a $K$-algebra $A$ and $S \subs A$,
+    $S$ is called respectively algebraically independent over $A$, generating
+    when $ev_S : K[S] \to A$ is injective, surjective. 
+
+    \item (Tensor Product, Extension and Contraction of Scalars)
+    Let $B$ be an $A$-algebra where $A$ is a commutative ring. 
+    Every $B$-module $N$ already has an $A$-module structure. 
+    This gives a forgetful functor from $\MOD(B)$ to $\MOD(A)$.
+
+    ``Conversely'', for any $A$-module $M$, 
+    $B \otimes_A M$ has an obvious $B$-module structure.
+    Then for any $A$-linear map $f \in \MOD(A)(M,N)$, 
+    $\id{B} \otimes_A f \in \MOD(B)(B\otimes_A M, B\otimes_A N)$.
+    This makes $B \otimes_A (-)$ into a functor from 
+    $\MOD(A)$ to $\MOD(B)$.
+    In analogy with the prior examples,
+    extension of scalars can be seen as 
+    ``taking the free $B$-module over an $A$-module''.
+
+    \item (Localization of Modules)
+    Let $A$ be a commutative ring and $S \subs A$ multiplicative. 
+    Define the category $\MOD(A_S)$ as the full subcategory of $\MOD(A)$ 
+    with objects consisting of $M \in \obj{\MOD(A)}$ such that 
+    for all $f \in S$, scalar multiplication by $f$ on $M$ is an isomorphism,
+    i.e. $f$ is an ``invertible'' scalar for $M$.
+    There is an obvious forgetful functor from $\MOD(A_S)$ to $\MOD(A)$.
+
+    ``Conversely'', for an $A$-module $M$, 
+    the localization of $M$ with respect to $S$ is 
+    is an object $M_S$ of $\MOD(A_S)$ that comes with 
+    an $A$-linear map $\lift{}{} : M \to M_S$ such that 
+    for all $N \in \MOD(A_S)$ and $f \in \MOD(A)(M,N)$,
+    there is a unique $f_S \in \MOD(A_S)(M_S,N)$ where 
+    $f_S \circ \lift{}{} = f$.
+    This gives a functor $\MOD(A) \to \MOD(A_S), M \mapsto M_S$
+    and morphisms are mapped to induced morphisms. 
+    In particular, the localization $A_S$ of $A$ itself 
+    has an obvious ring structure.
+    This realizes $\MOD(A_S)$ as the category of modules over $A_S$.
+
+    \item (Group Algebra)
+    The following is similar to the free algebra construction. 
+    Let $K$ be a commutative ring.
+    Then for $A \in \ALG(K)$, $A^\times \in \AB$.
+    Any $f \in \ALG(K)(A,B)$, 
+    let $f^\times$ denote the restriction of $f$ onto $A^\times$.
+    Then $f^\times$ is automatically a morphism of abelian groups
+    (keeping in mind the group operation is multiplication).
+    This gives a ``forgetful functor'' from $\ALG(K)$ to $\AB$.
+    
+    ``Conversely'',
+    for any abelian group $G$,
+    the group $K$-algebra over $G$ is a $K$-algebra $K[G]$ that comes with
+    a morphism of abelian groups $\lift{}{} : G \to K[G]^\times$ such that
+    for any other $K$-algebra $A$ and $\phi \in \AB(G,A^\times)$,
+    there exists a unique $K[\phi] \in \ALG(K)(K[G],A)$ such that 
+    $K[\phi] \circ \lift{}{} = \phi$. 
+    This property makes $G \mapsto K[G]$ into a functor from 
+    $\AB$ to $\ALG(K)$.
+    In analogy to the prior examples,
+    this may be seen as taking the ``free $K$-algebra on $G$''.
+    In particular, $K[\Z]$ is precisely the localization $K[T,T\inv]$. 
+
+    \item (Symmetric Algebra)
+    The following is similar to the group algebra construction.
+    Let $A$ be a commutative ring.
+    Then for any $A$-module $M$,
+    the symmetric algebra $Symm\,M$ is an object in $\ALG(A)$ 
+    that comes with an $A$-linear map $\lift{}{} : M \to Symm\,M$
+    such that for any $A$-algebra $B$ and $\phi \in \MOD(A)(M,B)$,
+    there exists a unique $A$-algebra morphism $Symm\,\phi : Symm\,M \to B$
+    such that $Symm\,\phi \circ \lift{}{} = \phi$.
+    In analogy with the prior examples,
+    this may be seen as taking the ``free $A$-algebra over $M$''.
+
+    \item (Discrete Topology)
+    For any set $X$, $(X,2^X)$ where $2^X$ is the powerset of $X$
+    is a topological space. 
+    Then for any topological space $Y$ and $f \in \SET(X,Y)$,
+    $f$ is automatically continuous with respect to the discrete topology $2^X$.
+    This gives rise to a functor $\SET \to \TOP$.
+    In analogy with the prior examples, 
+    this seen as taking the ``free topological space on $X$''.
+
+  \end{itemize}
+
+  The next list is themed ``moving structures on objects across morphisms''.
+  \begin{itemize}
+    \item Image, Preimage of subsets
+    \item Image Preimage of subgroups
+    \item Image Preimage of Subrings
+    \item Image Preimage of Submodules
+    \item Image, Preimage of filters
+  \end{itemize}
+
+  This list contains more exotic ``algebraic constructions''.
+  \begin{itemize}
+    \item Fundamental groups
+    \item Singular Complex
+    \item Classical Galois Correspondence
+    \item Vanishing, Ideal
+    \item Spec of a commutative ring
+  \end{itemize}
+
+  The final list consists of miscellaneous ``algebraic constructions'' :
+  \begin{itemize}
+    \item (Vector Spaces with a Basis)
+    Let $K$ be a field. 
+    Define a category $\CC$ as follows : 
+    \begin{itemize}
+      \item objects are pairs $(V,B)$ where $V$ is a $K$-vector space and 
+      $B$ is a basis of $V$. 
+      \item For $(V,B_V), (W,B_W)$ objects in $\CC$, 
+      define $\CC((V,B_V),(W,B_W))$ as the set of $K$-linear maps 
+      from $V$ to $W$ such that maps $B_V$ into $B_W$.
+      \item For every $K$-vector space with a basis $(V,B_V)$, 
+      $\id{(V,B_V)}$ is defined to be the identity map of $V$. 
+      \item Composition of the underlying $K$-linear maps of morphisms yields
+      another morphism in this category. 
+    \end{itemize}
+    Define the functor $F : \CC \to \CC$ that ``takes components'' as follows : 
+    \begin{itemize}
+      \item For $(V,B_V)$ in $\CC$, 
+      let $F((V,B_V)) := (K^{\oplus B_V}, E)$ where 
+      $K^{\oplus B_V}$ is the free $K$-vector space on $B_V$ and 
+      $E$ is the standard basis.
+      \item For a morphism $f \in \CC((V,B_V),(W,B_W))$,
+      since $f B_V \subs B_W$, 
+      this determines a map from the standard basis of $K^{\oplus B_V}$ to
+      the standard basis of $K^{\oplus B_W}$, 
+      thus extending to a unique 
+      $K$-linear map $F(f) : K^{\oplus B_V} \to K^{\oplus B_W}$.
+      \item Identity morphisms are clearly respected.
+      \item Composition of morphisms are clearly respected. 
+    \end{itemize}
+    There is a natural isomorphism between 
+    ``taking components'' and the identity functor : 
+    For each $(V,B_V)$ in $\CC$, 
+    consider the $K$-linear map $[-]_{B_V} : V \to K^{\oplus B_V}$ that 
+    that takes vectors to their components with respect to $B_V$.
+    This is well-defined and an isomorphism by $B_V$ being a basis. 
+    (In fact, this can serve as a \emph{definition} of $B_V$ being a basis.)
+    Then we have naturality : 
+    \begin{cd}
+      (V,B_V) \ar[r,"f"] \ar[d,"\sqbrkt{-}_{B_V}"{swap},"\sim"] &
+      (W,B_W) \ar[d,"\sqbrkt{-}_{B_W}","\sim"{swap}] \\
+      (K^{\oplus B_V},E) \ar[r,"F(f)"] &
+      (K^{\oplus B_W},E) \\
+    \end{cd}
+    In particular for a fixed $K$-vector space $V$ and 
+    two finite bases $B,B_1$,
+    any total ordering on $B, B_1$ gives rise to a unique 
+    $f \in \CC((V,B),(V,B_1))$.
+    Then the (iso)morphism $F(f)$ is 
+    what is usually known as \emph{change of basis}.
+
+    \item  Dual Module
+  
+    \item (Power Set as an $\F_2$-Algebra)
+    For any set $X$, we can see the power set $2^X$ as $\F_2^X$
+    the set of set morphisms from $X$ to the field with two elements $\F_2$.
+    Then $\F_2^X$ naturally has a structure of an $\F_2$-algebra.
+    Explicitly, for two subsets $f, g \in \F_2^X$,
+    $f g = f \cap g$ and $f + g = (f \cup g) \minus (f \cap g)$.
+    The additive identity is $\nothing$ and the multiplicative identity is $X$.
+    One can see that preimage functor $X \mapsto 2^X = \F_2^X$
+    upgrades to a contravariant functor from $\SET$ to $\ALG(\F_2)$.
+
+    \item  Tangent space of pointed differentiable manifold
+  \end{itemize}
+\end{eg}
