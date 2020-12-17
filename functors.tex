@@ -21,7 +21,10 @@
   
   We define the \emph{category of categories} $\CAT$, 
   \begin{enumerate}
-    \item $\obj{\CAT}$ consists of categories. 
+    \item $\obj{\CAT}$ consists of categories.\footnote{
+      This is technically not a set since it contains the category $\SET$,
+      but we do not lose sleep over such issues. 
+    }
     \item For $\CC, \DD \in \obj{\CAT}$, 
     $\mor{\CC}{\DD}{\CAT}$ consists of functors from $\CC$ to $\DD$.  
     \item For $\CC \in \obj{\CAT}$, $\id{\CC}$ is the obvious thing.
@@ -199,163 +202,160 @@
   
   The following is but a small sample of the vast sea of functors that
   appear in mathematics. 
-  There is no need to ``memorize'' these.
-  You will spot them when they appear. 
 
-  The first list gives constructions of ``structures''
-  between subcategories of sets. 
-  The theme is that these are all 
-  \linkto{free}{free functors} adjoint to some kind of forgetful functor.
-  Details of this are explained in the section on adjunctions. 
+  The first list concerns 
+  ``freely creating structure from a subcategory to an ambient category''.
+  It begins with the concept of a \emph{forgetful functor}.
+  Details of this are explained \linkto{free}{in the section on adjunctions}. 
   \begin{itemize}
-    \item Forgetful functor
+    \item (Forgetful functor)
     Given any subcategory $\CC$ of $\DD$, 
     there is an ``obvious'' functor from $\CC$ to $\DD$ that maps 
     $\obj{\CC} \to \obj{\DD}$ by doing nothing and 
     morphisms in $\CC$ to morphisms in $\DD$ by doing nothing. 
-    Functors of this form are often called 
-    the \emph{forgetful functor}.
+    Functors of this form are called \emph{forgetful functors}.
 
     Here is a graph showing subcategories of set and their ``inclusions''.
     \begin{cd}
       \SET & 
       \GRP \ar[l] & 
       \AB \ar[l] & 
-      \MOD(R) \ar[l] \\
+      \RING \ar[l] &
+      \CRING \ar[l]
+       \\
       \TOP \ar[u] & 
-      \RING \ar[u] \ar[ur] & 
-      \CRING \ar[u] \ar[l] & 
-      \ALG(R) \ar[l] \ar[u]
+      & 
+      R\MOD \ar[u] & 
+      \ALG(R) \ar[l] \ar[u] & 
+      \CALG(R) \ar[l] \ar[u]
     \end{cd}
-    in the diagram, $R$ is a commutative ring with unity. 
-    The maps from $\RING, \CRING$ into $\AB$ take 
-    (commutative) rings to their underlying abelian groups. 
+    For the category $R\MOD$ of left modules over $R$, $R$ need only be a ring. 
+    For $\ALG(R)$, $R$ needs to be commutative with unity.
+    The maps from $\RING, R\MOD$ into $\AB$ takes
+    the underlying abelian groups. 
+
+    In particular, we call a subcategory $\CC$ of $\DD$,
+    we say $\CC$ is a \emph{full subcategory of $\DD$} when 
+    the forgetful functor is full. 
+    Faithfulness is given since morphism sets of $\CC$ are 
+    by definition subsets of morphism sets of $\DD$.
 
     \item (Free Group)
-    For each set $S$, the free group over $S$ is an object $\<S\> \in \GRP$
+    For each set $S$, 
+    the \emph{free group over $S$} is an object $\<S\> \in \GRP$
     the comes with a morphism of sets $\lift{}{} : S \to \<S\>$ such that
     for any group $G$ and $\phi \in \SET(S,G)$,
     there is a unique morphism of groups $\<\phi\> \in \GRP(\<S\>,G)$ such that
     $\<\phi\> \circ \lift{}{} = \phi$.
     This makes $G \mapsto \<G\>$ into a functor from $\SET$ to $\GRP$.
 
-    \item (Free Module over a Ring)
-    Let $A$ be a commutative ring. 
-    For each set $S$, 
-    the free $A$-module over $S$ is an object $A^{\oplus S} \in \MOD(A)$ 
-    that comes with a morphism of sets $\lift{}{} : S \to A^{\oplus S}$
-    such that for any $A$-module $M$ and $f \in \SET(S,M)$,
-    there is a unique $A$-linear map 
-    $A^{\oplus f} : \oplus_{s \in S} A \to M$ such that 
-    $A^{\oplus f} \circ \lift{}{} = f$. 
-    This makes $S \mapsto A^{\oplus S}$ into a functor 
-    from $\SET$ to $\MOD(A)$.
+    In particular, for $S \subs G$ and $f$ the usual inclusion, 
+    $S$ is called \emph{generating} when $\<\io\>$ is surjective,
+    where $\io \in \SET(S,G)$ is the usual inclusion. 
 
-    In particular, for a fixed $M \in \MOD(A)$ and $S \subs M$,
+    \item (Free Module over a Ring)
+    Let $R$ be a ring. 
+    For each set $S$, 
+    the \emph{free left $R$-module over $S$} is 
+    an object $R^{\oplus S} \in R\MOD$ 
+    that comes with a morphism of sets $\lift{}{} : S \to R^{\oplus S}$
+    such that for any $R$-module $M$ and $f \in \SET(S,M)$,
+    there is a unique $R$-linear map 
+    $R^{\oplus f} : \oplus_{s \in S} R \to M$ such that 
+    $R^{\oplus f} \circ \lift{}{} = f$. 
+    This makes $S \mapsto R^{\oplus S}$ into a functor 
+    from $\SET$ to $R\MOD$.
+
+    In particular, for $S \subs M$ and $f$ the usual inclusion, 
     $S$ is called respectively linearly independent, spanning, a basis
-    if and only if $A^{\oplus f}$ is injective, surjective, an isomorphism.
+    when $R^{\oplus f}$ is injective, surjective, an isomorphism.
 
     Note that the above covers $\AB$, since 
-    $\AB$ is nothing more than $\MOD(\Z)$.
+    $\AB$ is nothing more than $\Z\MOD$.
 
-    \item (Free Algebra over a Ring)
+    \item (Free Commutative Algebra over a Ring)
     Let $K$ be a commutative ring. 
     For each set $S$, 
-    the free $K$-algebra over $S$ is an object $K[S] \in \ALG(K)$
+    the free commutative $K$-algebra over $S$ is an object $K[S] \in \CALG(K)$
     that comes with a morphism of sets $\lift{}{} : S \to K[S]$ such that
     for any $K$-algebra $A$ and $a \in \SET(S,A)$,
     there exists a unique $K$-algebra morphism $ev_a : K[S] \to A$
     such that $ev_a \circ \lift{}{} = a$.
     This makes $S \mapsto K[S]$ into a functor 
-    from $\SET$ to $\ALG(K)$.
+    from $\SET$ to $\CALG(K)$.
 
-    These free algebras are not unfamiliar.
+    These free commutative algebras are not unfamiliar.
     For instance, 
     the polynomial ring in $K[T]$ over $K$ is
     precisely $K[\set{*}]$ where $\set{*}$ is the singleton set.
-    For any $K$-algebra $A$,
+    For any commutative $K$-algebra $A$,
     a set morphism $a : \set{*} \to A$ is nothing more than
     an element in $A$.
     So as suggested by the notation, $ev_a$ is precisely evaluation 
     of polynomials $f \mapsto f(a)$ where we have identified 
     the set morphism $a$ with the unique element in its image. 
     Generalizing, for an arbitrary set $S$,
-    $K[S]$ is precisely the $K$-algebra of polynomials 
+    $K[S]$ is precisely the commutative $K$-algebra of polynomials 
     with variables indexed by $S$. 
-    In particular, for a $K$-algebra $A$ and $S \subs A$,
+    In particular, for a commutative $K$-algebra $A$ and $S \subs A$,
     $S$ is called respectively algebraically independent over $A$, generating
     when $ev_S : K[S] \to A$ is injective, surjective. 
 
     \item (Tensor Product, Extension and Contraction of Scalars)
-    Let $B$ be an $A$-algebra where $A$ is a commutative ring. 
-    Every $B$-module $N$ already has an $A$-module structure. 
-    This gives a forgetful functor from $\MOD(B)$ to $\MOD(A)$.
+    Let $B$ be a commutative $A$-algebra where $A$ is a commutative ring. 
+    Every $B$-module $N$ has an obvious $A$-module structure. 
+    This gives a forgetful functor from $B\MOD$ to $A\MOD$.
+  
+    For any $M \in \obj{A\MOD}$, 
+    $M \otimes_A B$ the extension of scalars of $M$ has the property that
+    it comes with an obvious morphism of $A$-modules 
+    $\lift{}{} : M \to M \otimes_A B$ such that 
+    for any $N \in \obj{B\MOD}$ and $f \in A\MOD(M,N)$, 
+    there exists a unique $A$-module morphism 
+    $f \otimes_A \id{B} : M \otimes_A B \to N$ such that 
+    $(f\otimes_A \id{B}) \circ \lift{}{} = f$.
 
-    ``Conversely'', for any $A$-module $M$, 
-    $B \otimes_A M$ has an obvious $B$-module structure.
-    Then for any $A$-linear map $f \in \MOD(A)(M,N)$, 
-    $\id{B} \otimes_A f \in \MOD(B)(B\otimes_A M, B\otimes_A N)$.
-    This makes $B \otimes_A (-)$ into a functor from 
-    $\MOD(A)$ to $\MOD(B)$.
     In analogy with the prior examples,
     extension of scalars can be seen as 
     ``taking the free $B$-module over an $A$-module''.
 
     \item (Localization of Modules)
     Let $A$ be a commutative ring and $S \subs A$ multiplicative. 
-    Define the category $\MOD(A_S)$ as the full subcategory of $\MOD(A)$ 
-    with objects consisting of $M \in \obj{\MOD(A)}$ such that 
+    Define the category $S\inv A\MOD$ as the full subcategory of $S\inv A\MOD$ 
+    with objects consisting of $M \in \obj{A\MOD}$ such that 
     for all $f \in S$, scalar multiplication by $f$ on $M$ is an isomorphism,
     i.e. $f$ is an ``invertible'' scalar for $M$.
-    There is an obvious forgetful functor from $\MOD(A_S)$ to $\MOD(A)$.
+    We then have a forgetful functor from $S\inv A\MOD$ to $A\MOD$.
 
-    ``Conversely'', for an $A$-module $M$, 
+    Now, for an $A$-module $M$, 
     the localization of $M$ with respect to $S$ is 
-    is an object $M_S$ of $\MOD(A_S)$ that comes with 
-    an $A$-linear map $\lift{}{} : M \to M_S$ such that 
-    for all $N \in \MOD(A_S)$ and $f \in \MOD(A)(M,N)$,
-    there is a unique $f_S \in \MOD(A_S)(M_S,N)$ where 
-    $f_S \circ \lift{}{} = f$.
-    This gives a functor $\MOD(A) \to \MOD(A_S), M \mapsto M_S$
+    is an object $S\inv M$ of $S\inv A\MOD$ that comes with 
+    an $A$-linear map $\lift{}{} : M \to S\inv M$ such that 
+    for all $N \in S\inv A\MOD$ and $f \in A\MOD(M,N)$,
+    there is a unique $S\inv(f) \in S\inv A\MOD(M_S,N)$ where 
+    $S\inv(f) \circ \lift{}{} = f$.
+    This gives a functor $A\MOD \to S\inv A\MOD, M \mapsto S\inv M$
     and morphisms are mapped to induced morphisms. 
-    In particular, the localization $A_S$ of $A$ itself 
+    In particular, the localization $S\inv A$ of $A$ itself 
     has an obvious ring structure.
-    This realizes $\MOD(A_S)$ as the category of modules over $A_S$.
+    One can then realize $S\inv A\MOD$ as 
+    the category of modules over $S\inv A$.
 
-    \item (Group Algebra)
-    The following is similar to the free algebra construction. 
-    Let $K$ be a commutative ring.
-    Then for $A \in \ALG(K)$, $A^\times \in \AB$.
-    Any $f \in \ALG(K)(A,B)$, 
-    let $f^\times$ denote the restriction of $f$ onto $A^\times$.
-    Then $f^\times$ is automatically a morphism of abelian groups
-    (keeping in mind the group operation is multiplication).
-    This gives a ``forgetful functor'' from $\ALG(K)$ to $\AB$.
-    
-    ``Conversely'',
-    for any abelian group $G$,
-    the group $K$-algebra over $G$ is a $K$-algebra $K[G]$ that comes with
-    a morphism of abelian groups $\lift{}{} : G \to K[G]^\times$ such that
-    for any other $K$-algebra $A$ and $\phi \in \AB(G,A^\times)$,
-    there exists a unique $K[\phi] \in \ALG(K)(K[G],A)$ such that 
-    $K[\phi] \circ \lift{}{} = \phi$. 
-    This property makes $G \mapsto K[G]$ into a functor from 
-    $\AB$ to $\ALG(K)$.
-    In analogy to the prior examples,
-    this may be seen as taking the ``free $K$-algebra on $G$''.
-    In particular, $K[\Z]$ is precisely the localization $K[T,T\inv]$. 
+    In analogy with previous examples,
+    $S\inv M$ can be seen as taking $M$ and 
+    ``freely inverting the scalars in $S$''.
 
     \item (Symmetric Algebra)
-    The following is similar to the group algebra construction.
+    The following is similar to the free commutative algebra construction.
     Let $A$ be a commutative ring.
     Then for any $A$-module $M$,
-    the symmetric algebra $Symm\,M$ is an object in $\ALG(A)$ 
+    the symmetric algebra $Symm\,M$ is an object in $A\CALG$ 
     that comes with an $A$-linear map $\lift{}{} : M \to Symm\,M$
-    such that for any $A$-algebra $B$ and $\phi \in \MOD(A)(M,B)$,
+    such that for any commutative $A$-algebra $B$ and $\phi \in A\MOD(M,B)$,
     there exists a unique $A$-algebra morphism $Symm\,\phi : Symm\,M \to B$
     such that $Symm\,\phi \circ \lift{}{} = \phi$.
     In analogy with the prior examples,
-    this may be seen as taking the ``free $A$-algebra over $M$''.
+    this may be seen as taking the ``free commutative $A$-algebra over $M$''.
 
     \item (Discrete Topology)
     For any set $X$, $(X,2^X)$ where $2^X$ is the powerset of $X$
@@ -366,15 +366,74 @@
     In analogy with the prior examples, 
     this seen as taking the ``free topological space on $X$''.
 
+    \item (Discrete Category)
+    Given any set $S$, 
+    you can give it the structure of a category by
+    declaring $\obj{S} := S$ and the only morphisms to be identities. 
+    Then for any category $\CC$ and function $f : S \to \obj(\CC)$,
+    there is a unique functor $f_\CAT : S \to \CC$ that 
+    agrees with $f$ on the objects. 
+    This can be seen as the ``free category over $S$''.
+
   \end{itemize}
 
   The next list is themed ``moving structures on objects across morphisms''.
   \begin{itemize}
-    \item Image, Preimage of subsets
-    \item Image Preimage of subgroups
-    \item Image Preimage of Subrings
-    \item Image Preimage of Submodules
-    \item Image, Preimage of filters
+    \item (Image, Preimage of ``Subobjects'')
+    Let $f : U \to V$ be a set morphism. 
+    Then taking the image of subsets of $U$ under $f$
+    gives a functor $f : 2^U \to 2^V$.
+    In the other direction,
+    taking preimages of subsets of $V$ under $f$ gives 
+    a functor $f\inv : 2^V \to 2^U$.
+
+    If $f : U \to V$ is a morphism of groups,
+    the above functors restrict to \begin{align*}
+      f_\GRP : \SUB\GRP(U) \to \SUB\GRP(V) \\
+      f\inv_\GRP : \SUB\GRP(V) \to \SUB\GRP(U)
+    \end{align*}
+
+    Similar results for when $f$ is a morphism of $R\MOD, R\ALG$.
+
+    \item (Image, Preimage of Filters)
+    Let $f : X \to Y$ be a morphism of sets. 
+    Then the functor $f : 2^X \to 2^Y$ gives rise to 
+    the functor $f\inv : 2^{2^Y} \to 2^{2^X}$,
+    which restricts to a functor $f\inv_{\fil} : \fil Y \to \fil X$.
+    This is the \emph{inverse image functor for filters}.
+    
+    Unfortunately, given a $F \in \fil(X)$,
+    the set of subsets $\set{f U \st U \in F}$ does not
+    in general form a filter of $Y$. 
+    However, 
+    the set of subsets 
+    $f_{\fil} F := \set{W \in 2^Y \st \exists\, V \in F, f V \subs W }$ 
+    does form a filter on $Y$. 
+    This is equivalently the largest filter on $Y$ such that 
+    its inverse image filter is in $F$.
+    It is not hard to check that 
+    $f_{\fil} : \fil X \to \fil Y$ is functorial with respect to 
+    the category structure on $\fil X, \fil Y$ given by 
+    their $\POSET$ structure.
+
+    \item (``Functions" into a Fixed Object)
+    For any topological space $X$, 
+    $\TOP(X,\R)$ with pointwise addition and multiplication is
+    an object in $\R\CALG$.
+    Call $\TOP(X,\R)$ the \emph{global functions on $X$}.
+    Then for any topological morphism $\phi : X \to Y$ and 
+    we naturally get a set morphism 
+    $(- \circ \phi) : \TOP(X,\R) \to \TOP(Y,\R)$ which turns out to be 
+    a morphism of $\R$-algebras. 
+    This yields a functor, not from $\TOP$ to $\R\CALG$, but rather 
+    ``$\TOP\op$'' to $\R\CALG$  where 
+    ``$\TOP\op$'' looks like $\TOP$ but all morphisms are reversed. 
+    See \linkto{dual}{later} for details. 
+
+    Many situations analogous to the above can be found. 
+    For instance, replacing $\TOP$ with $\SET$ and $\R$ with $\set{0,1}$
+    yields the 
+    
   \end{itemize}
 
   This list contains more exotic ``algebraic constructions''.
@@ -388,20 +447,33 @@
 
   The final list consists of miscellaneous ``algebraic constructions'' :
   \begin{itemize}
+    \item (Group Algebra)
+    The following is similar to the free algebra construction. 
+    Let $K$ be a commutative ring.
+    Then for $A \in \ALG(K)$, $A^\times \in \AB$.
+    Any $f \in \ALG(K)(A,B)$, 
+    let $f^\times$ denote the restriction of $f$ onto $A^\times$.
+    Then $f^\times$ is automatically a morphism of abelian groups
+    (keeping in mind the group operation is multiplication).
+    
+    ``Conversely'',
+    for any abelian group $G$,
+    the group $K$-algebra over $G$ is a $K$-algebra $K[G]$ that comes with
+    a morphism of abelian groups $\lift{}{} : G \to K[G]^\times$ such that
+    for any other $K$-algebra $A$ and $\phi \in \AB(G,A^\times)$,
+    there exists a unique $K[\phi] \in \ALG(K)(K[G],A)$ such that 
+    $K[\phi] \circ \lift{}{} = \phi$. 
+    This property makes $G \mapsto K[G]$ into a functor from 
+    $\AB$ to $\ALG(K)$.
+    In particular, $K[\Z]$ is precisely the localization $K[T,T\inv]$. 
+
+    Note that we can actually remove the commutativity hypothesis
+    on groups and algebras,
+    obtaining functors between $\GRP$ and 
+    the category of non-commutative algebras of $K$.  
     \item (Vector Spaces with a Basis)
-    Let $K$ be a field. 
-    Define a category $\CC$ as follows : 
-    \begin{itemize}
-      \item objects are pairs $(V,B)$ where $V$ is a $K$-vector space and 
-      $B$ is a basis of $V$. 
-      \item For $(V,B_V), (W,B_W)$ objects in $\CC$, 
-      define $\CC((V,B_V),(W,B_W))$ as the set of $K$-linear maps 
-      from $V$ to $W$ such that maps $B_V$ into $B_W$.
-      \item For every $K$-vector space with a basis $(V,B_V)$, 
-      $\id{(V,B_V)}$ is defined to be the identity map of $V$. 
-      \item Composition of the underlying $K$-linear maps of morphisms yields
-      another morphism in this category. 
-    \end{itemize}
+    Let $K$ be a field and $\CC$ the category of $K$-vector spaces
+    together with a basis. 
     Define the functor $F : \CC \to \CC$ that ``takes components'' as follows : 
     \begin{itemize}
       \item For $(V,B_V)$ in $\CC$, 

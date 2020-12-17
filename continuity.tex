@@ -1,0 +1,299 @@
+\begin{dfn}[(Co)Continuous Functors]
+  \link{cts}
+
+  Let $F : \CC \to \DD$.
+  Then $F$ is called \emph{continuous} when 
+  for all categories $\II$ and 
+  $\II$-shaped diagrams $X$ with a limit $(U,u)$, 
+  $(F(U),F(u))$ is a limit of the $\II$-shaped diagram $F(X) := F \circ X$. 
+  More succinctly by abuse of notation, $F(\LIM X) = \LIM F(X)$.
+
+  Dually, $F$ is called \emph{cocontinuous} when
+  or all categories $\II$ and $\II$-shaped diagrams $X$ with
+  a colimit $(U,u)$,
+  $(F(U,F(u)))$ is a colimit of the $\II$-shaped diagram $F \circ X$.
+  More succinctly by abuse of notation, $F(\COLIM X) = \COLIM F(X)$.
+\end{dfn}
+
+\begin{rmk}
+  The focus of this section is to prove that
+  \emph{right adjoints are continuous} and 
+  \emph{left adjoints are cocontinuous}.
+  This is achieved by the special case of the (co)Yoneda embedding. 
+
+  What this says is that via adjunctions,
+  one can transfer constructions in one category to another.
+\end{rmk}
+
+\begin{prop}[Naturality of Taking Constant Diagrams]
+  \link{nat_const}
+  
+  Let $\II$ be a category. 
+  Then the collection of $(\De : \CC \to \CC^\II)_{\CC \in \obj{\CAT}}$
+  is a natural transformation from $\id{\CAT}$ to $\CAT(\II,-) = h^\II$.
+\end{prop}
+\begin{proof}
+  This is simply the commutativity of the following square given 
+  a functor $F : \CC \to \DD$, 
+  \begin{cd}
+    \CC \ar[r,"F"] \ar[d,"\De"]& \DD \ar[d,"\De"] \\
+    \CC^\II \ar[r,"F \circ -"] & \DD^\II
+  \end{cd}
+\end{proof}
+
+\begin{prop}[(Co)Continuity of the (Co)Yoneda Embedding]
+  \link{yoneda_cts}
+  
+  Let $X$ be an $\II$-shaped diagram in a category $\CC$.
+  We can embed $X$ into $\SET^{\CC\op}$ by the Yoneda embedding to get 
+  the $\II$-shaped diagram $h_X := \CC(-,X)$.
+  There is an obvious morphism 
+  $\pi_X \in \brkt{\SET^{\CC\op}}^\II\brkt{\De(\CC^\II(\De(-),X)),h_X}$.
+
+  Then $(\CC^\II(\De(-),X),\pi_X)$ is a limit of $h_X$ and 
+  for every $U \in \obj{\CC\op}$, the limit of $h_X(U)$ exists. 
+  \footnote{
+    Note that technically, 
+    we don't need to carry around this second piece of data since 
+    completeness of $\SET$ implies completeness of $\SET^\II$.
+    I have decided to keep it so that should the reader have decided to skip 
+    the completeness results of the previous section, 
+    the proofs in this section still carry through
+    without completeness assumptions.
+  }
+  Hence for any $(U,u) \in \obj{\De\darrow X}$,
+  \[
+    (U,u) \text{ is a limit of } X \iff 
+    (h_U,h_u) \text{ is a limit of } h_X
+  \]
+  More succinctly with abuse of notation, 
+  $h_{\LIM X} = \LIM h_X$ if either limit exists
+  (then they both exist).
+
+  Dually, we can embed $X$ into $\SET^{\CC}$ by the Yoneda embedding to get 
+  the $\II\op$-shaped diagram $h^X := \CC(X,-)$.
+  There is again an obvious morphism 
+  $\pi_X \in \brkt{\SET^\CC}^{\II}\brkt{\De(\CC^\II(X,\De(-))),h^X}$.
+
+  Then $(\CC^\II(X,\De(-)),\pi_X)$ is a limit of $h^X$ and 
+  for every $U \in \obj{\CC}$, the limit of $h^X(U)$ exists. 
+  Hence, for any $(U,u) \in \obj{X\darrow\De}$,
+  \[
+    (U,u) \text{ is a colimit of } X \iff 
+    (h^U,h^u) \text{ is a limit of } h^X
+  \]
+  More succinctly with abuse of notation, 
+  $h^{\COLIM X} = \LIM h^X$ if 
+  either the colimit or the limit exists (then they both exist).
+
+\end{prop}
+\begin{proof}
+  By the characterisation of limits of functors,
+  it suffices to show that for every $V \in \obj{\CC\op}$,
+  we have that 
+  $(\CC^\II(\De(V),X),(\pi_X)_V)$ is a limit of $h_X(V)$,
+  where $(\pi_X)_V \in \SET^\II(\De(\CC^\II(\De(V),X)),h_X(V))$ is obtained by 
+  restricting $\pi_X$ in the second argument to $V$.
+  The essence is that ``a cone over $X$ is nothing more than 
+  a compatible system of morphisms from the tip to $X$''.
+
+  Let $(S,\si) \in \obj{\De\darrow\CC(V,X)}$.
+  We seek a unique morphism $(S,\si) \to (\CC^\II(\De(V),X),(\pi_X)_V)$.
+  By function extensionality, 
+  a collection of set morphisms $(\set{s} \to \CC^\II(\De(V),X))_{s\in S}$
+  glues uniquely to a function $S \to \CC^\II(\De(V),X)$.
+  It thus suffice to do the case of $S = \set{*}$, a singleton.
+  \begin{cd}
+    \De(\set{*}) \ar[r,dashed,"\De(\LIM \si)"] 
+      \ar[rd,"\si"{swap}] & 
+    \De(\CC^\II(\De(V),X)) \ar[d,"(\pi_X)_V"]\\
+    & \CC(V,X)
+  \end{cd}
+  Then $\si : \De(\set{*}) \to \CC(V,X)$ is equivalent to the data of
+  a morphism $\De(V) \to X$, i.e. an element of $\CC^\II(\De(V),X)$.
+  This gives a unique $\LIM \si : \set{*} \to \CC^\II(\De(V),X)$ such that 
+  $(\pi_X)_V \circ \De(\LIM \si) = \si$ as desired.
+  Hence, $(\CC^\II(\De(-),X),\pi_X)$ is a limit of $h_X$.
+
+  % \textit{[UP of $\CC^\II(\De(-),X)$]}
+  % Let $(F,\phi) \in \obj{\De\darrow \CC(-,X)}$.
+  % Then for every $V \in \obj{\CC\op}$, 
+  % the morphism $\phi \in {\SET^{\CC\op}}^\II(\De(F),\CC(-,X))$ restricts 
+  % to a morphism $(\phi)_V \in \SET^\II(\De(F(V)),\CC(V,X))$.
+  % \begin{cd}
+  %   \De(F(V)) \ar[r,"\De(\LIM (\phi)_V)", dashed] \ar[rd,"(\phi)_V"{swap}] & 
+  %   \De(\CC^\II(\De(V),X)) \ar[d,"(\pi_X)_V"] &
+  %   \De(F) \ar[r,"\De(\LIM \phi)", dashed] \ar[rd,"\phi"{swap}] & 
+  %   \De(\CC^\II(\De(-),X)) \ar[d,"\pi_X"] \\
+  %   & 
+  %   \CC(V,X) &
+  %   & 
+  %   \CC(-,X)
+  % \end{cd}
+  % For every $V \in \obj{\CC\op}$,
+  % by the universal property of $\CC^\II(\De(V),X)$,
+  % we have a unique morphism 
+  % $\LIM (\phi)_V : (F(V),(\phi)_V) \to (\CC^\II(\De(V),X),(\pi_X)_V)$.
+  % It also follows from the UP of $\CC^\II(\De(V),X)$ that 
+  % the left triangle above is (contravariantly) functorial in $V$,
+  % and hence $(\LIM (\phi)_V)_{V \in \obj{\CC\op}}$ forms a 
+  % morphism $\LIM \phi : (F,\phi) \to (\CC^\II(\De(-),X),\pi_X)$.
+  % The uniqueness of $\LIM (\phi)_V$ for every $V$ then implies 
+  % the uniqueness of $\LIM \phi$.
+  % Hence, $\CC^\II(\De(-),X)$ has the UP required for being the 
+  % limit of $\CC(-,X)$.
+
+  Now, $(U,u)$ is a limit of $X$ \linkto{limit}{if and only if} 
+  $\CC(-,U) \iso \CC^\II(\De(-),X)$ where $\id{U}$ corresponds to $u$,
+  if and only if $(h_U,h_u)$ is isomorphic to $(\CC^\II(\De(-),X),\pi_X)$
+  in $\De\darrow h_X$,
+  \linkto{iso_uni_implies_uni}{if and only if} $(h_U,h_u)$ is a limit of $h_X$.
+
+  The dual argument is similar, the only minor discrepancy being 
+  the conversion of colimits into limits.
+\end{proof}
+
+\begin{rmk}
+  Note that what we not just shown continuity of the Yoneda embedding,
+  but also that ``limits in its image pull back to limits''.
+\end{rmk}
+
+\begin{prop}[Right Adjoints Continuous,
+  Left Adjoints Cocontinuous]\link{adjoint_cts}
+  
+  Let $R : \CC \to \DD$, $L : \DD \to \CC$ be functors such that 
+  $(L,R)$ forms an adjunctions. 
+  Let $\II$ be a category.
+  Then 
+  \begin{itemize}
+    \item Given an $\II$-shaped diagram $X$ in $\CC$ with a limit $(U,u)$,
+    $(R(U),R(u))$ is a limit of the diagram $R(X) := R \circ X$.
+    More succinctly with abuse of notation, $R(\LIM X) = \LIM R(X)$.
+    \item Given an $\II$-shaped diagram $X$ in $\DD$ with colimit $(U,u)$, 
+    $(L(U),L(u))$ is a colimit of the diagram $L(X) := L \circ X$.
+    More succinctly with abuse of notation, $L(\COLIM X) = \COLIM L(X)$.
+  \end{itemize} 
+\end{prop}
+\begin{proof}
+  % Let $X$ be an $\II$-shaped diagram in $\CC$ and 
+  % $(\LIM X, \pi_X) \in \obj{\De\darrow X}$ the limit of $X$. 
+  % To show $(R(\LIM X),R(\pi_X))$ is a limit of $R(X)$,
+  % it \linkto{yoneda_cts}{suffices} to show that 
+  % $(h_{R(\LIM X)},h_{R(\pi_X)}) \in \obj{\De\darrow h_{R(X)}}$
+  % is a limit of $h_{R(X)}$, the embedding of $R(X)$ under Yoneda. 
+  % The proof is contained in the following diagrams : 
+  % \begin{cd}
+  %   \De(\LIM X) \ar[d,"\pi_X"] &
+  %   \De(R(\LIM X)) \ar[d,"R(\pi_X)"] & 
+  %   \De(h_{R(\LIM X)}) \ar[d,"h_{R(\pi_X)}"] \ar[r,"\sim"] & 
+  %   \De(\CC(L(-),\LIM X)) \ar[d,"{\CC(L(-),\pi_X)}"] \\
+  %   X & 
+  %   R(X) & 
+  %   \DD(-,R(X)) \ar[r,"\sim"] & 
+  %   \CC(L(-),X)  
+  % \end{cd}
+  % Put the left through $R$ to obtain the middle,
+  % then embed through Yoneda to obtain the left vertical arrow in the 
+  % square on the right. 
+  % The right vertical arrow of the square is the image of 
+  % $\pi_X$ under the functor $U \mapsto h_U \circ L$.
+  % The horizontal isomorphisms of the square are from the adjunction and 
+  % the square commutes by naturality of the adjunction. 
+  % But by continuity of Yoneda, 
+  % $(h_{\LIM X},h_{\pi_X})$ is a limit of $h_X$.
+  % In particular, for any $V \in \obj{\CC\op}$,
+  % $(\CC(V,\LIM X),\CC(V,\pi_X)$ is a limit of $h_X(V) = \CC(V,X)$.
+  % It follows that for any $W \in \obj{\DD\op}$,
+  % $(\CC(L(W),\LIM X),\CC(L(W),\pi_X))$ is a limit of $\CC(L(W),X)$. 
+  % Hence $(\CC(L(-),\LIM X),\CC(L(-),X)$ is a limit of $\CC(L(-),X)$.
+  % The horizontal isomorphisms then gives us that 
+  % $(h_{R(\LIM X)}, h_{R(\pi_X)})$ is 
+  % a limit of $h_{R(X)} = \DD(-,R(X))$ as desired. 
+
+  Consider the following not necessarily commutative diagram : 
+  \begin{cd}
+    \CC \ar[r,"h_\star"] \ar[d,"R"{swap}] & 
+    \SET^{\CC\op} \ar[d,"(-\circ L\op)"] \\
+    \DD \ar[r,"h_\star"{swap}] & 
+    \SET^{\DD\op}
+  \end{cd}
+  Starting on the top left,
+  putting $u : \De(U) \to X$ through to the bottom right via 
+  the two different paths yields the following square 
+  (using \linkto{nat_const}{naturality of constant diagrams} along the way): 
+  \begin{cd}
+    \De(h_{R(U)}) \ar[d,"h_{R(u)}"] \ar[r,"\sim"] & 
+    \De(h_{U}\circ L\op) \ar[d,"{h_u \circ L\op}"] \\
+    h_{R(X)} \ar[r,"\sim"] & 
+    h_X \circ L\op
+  \end{cd}
+  The horizontal isomorphisms come from the adjunction and 
+  the square commutes by naturality of the adjunction isomorphism.
+  For $(R(U),R(u))$ to be a limit of $R(X)$, 
+  by continuity of the Yoneda embedding it suffices that 
+  $(h_{R(U)},h_{R(u)})$ is a limit of $h_{R(X)}$.
+  Then by the horizontal isomorphisms, 
+  it suffice that $(h_U \circ L\op, h_u \circ L\op)$ is 
+  a limit of $h_X \circ L\op$.
+
+  By the \linkto{char_lim_funk}{characterisation of limits of functors},
+  it suffices for every $V \in \obj{\DD\op}$ that the corresponding component
+  $(h_U(L\op(V)),(h_u\circ L\op)_V)$ is a limit of $h_X(L\op(V))$.
+  Well, since $(U,u)$ is a limit of $X$,
+  by continuity of the Yoneda embedding, 
+  we have $(h_U,h_u)$ is a limit of $h_X$ and for every $V \in \obj{\CC\op}$,
+  the limit of $h_X(V)$ exists. 
+  Then again by the 
+  \linkto{char_lim_funk}{characterisation of limits of functors},
+  we have in fact that the components of $(h_U,h_u)$ are 
+  limits of the components of $h_X$.
+  In particular, for any $V \in \obj{\DD\op}$,
+  $(h_U(L\op(V)),(h_u)_{L\op(V)})$ is a limit of $h_X(L\op(V))$ as desired.
+  
+  The dual argument is similar. 
+\end{proof}
+
+\begin{rmk}
+  The usual proof of the above given in texts is 
+  the following line of ``equalities'' : 
+  \begin{align*}
+    \DD(-,R(\LIM X)) = \CC(L(-),\LIM X)
+    = \LIM \CC(L(-),X)
+    = \LIM \DD(-,R(X))
+  \end{align*}
+  from which one concludes $R(\LIM X) = \LIM R(X)$ by 
+  \linkto{yoneda_cts}{continuity of the Yoneda embedding}.
+  The second and third ``equality'' can be obtained if 
+  one equates all limits of the same diagram. 
+
+  However, the first equality is just a flat out lie.
+  It corresponds to the top horizontal isomorphism in the second square 
+  of the proof given here. 
+  The usual proof can then be remedied by 
+  attaching an extra ``equality'' at the end ``$= \DD(-,\LIM R(X))$'',
+  for then by the Yoneda embedding being \linkto{yoneda}{fully faithful},
+  one obtains an isomorphism $R(\LIM X) \iso \LIM R(X)$.
+  This does indeed prove that ``$R(\LIM X)$'' is a limit, however, 
+  we have lost the information about the morphism to the diagram $R(X)$.
+  There is still work to be done to show that
+  the morphism from $\De(R(\LIM X))$ to $R(X)$ is really 
+  the image of the original morphism $\pi_X : \De(\LIM X) \to X$ under $R$.
+  This work is precisely the commutativity of the 
+  second square in the proof given here.
+\end{rmk}
+
+\begin{cor}[(Co)Limits commute with (Co)Limits]
+  
+  (TODO)
+\end{cor}
+
+\begin{dfn}[Filtered Categories, Diagrams, Colimits]\label{filtered}
+  
+  (TODO)
+\end{dfn}
+
+\begin{prop}[Characterisation of Filtered Diagrams in terms of $\SET$]
+  \label{filtered_colimits_commute}
+
+  (TODO)
+\end{prop}

@@ -1,10 +1,10 @@
 \begin{dfn}[Adjoint Functors]
-  \hypertarget{adjoint}{}
+  \link{adjoint}
   
   Let $R : \map{\CC}{\DD}{\CAT}{}$.
   Then $R$ is a \emph{right adjoint} when 
   there exists $L : \map{\obj{\DD}}{\obj{\CC}}{}{}$ and 
-  $\eta \in \Pi {X \in \obj{\DD}}, \mor{X}{RL(X)}{\DD}$ such that 
+  $(\eta_X) \in \prod_{X \in \obj{\DD}} \mor{X}{RL(X)}{\DD}$ such that 
   for all $X\in\obj{\DD}$, 
   $(L(X),\eta(X))$ is a universal morphism from $X$ to $R$.
   In this case, $L$ is called the \emph{left adjoint of $R$}.
@@ -13,14 +13,14 @@
   Dually, let $L : \map{\DD}{\CC}{\CAT}{}$.
   Then $L$ is a \emph{left adjoint} when 
   there exists $R : \map{\obj{\CC}}{\obj{\CC}}{}{}$ and 
-  $\ep \in \Pi {U \in \obj{\CC}}, \mor{LR(U)}{U}{\CC}$ such that 
+  $(\ep_U) \in \prod_{U \in \obj{\CC}} \mor{LR(U)}{U}{\CC}$ such that 
   for all $U\in\obj{\CC}$,
   $(R(U),\ep(U))$ is a universal morphism from $L$ to $U$. 
   In this case, $R$ is called the \emph{right adjoint of $L$}.
 \end{dfn}
 
 \begin{dfn}[Product Category]
-  \hypertarget{product_cat}{}
+  \link{product_cat}
   
   Let $\CC, \DD$ be categories. 
   Then the \emph{product category of $\CC, \DD$} is denoted 
@@ -33,21 +33,25 @@
 \end{dfn}
 
 \begin{prop}[Natural Transformations on Product Category]
-  \hypertarget{nat_trans_prod_cat}{}
+  \link{nat_trans_prod_cat}
   
   Let $F, G : \map{\CC\times\DD}{\EE}{}{}$, 
-  $\al \in \Pi (U,X) \in \obj{\CC\times\DD}, \mor{F(U)}{G(X)}{\EE}$.
+  $(\al_{U,X}) \in \prod_{(U,X) \in \obj{\CC\times\DD}} 
+    \mor{F(U,X)}{G(U,X)}{\EE}$.
   Then the following are equivalent. 
   \begin{enumerate}
     \item $\al : \map{F}{G}{}{}$.
     \item For all $(U,X) \in \obj{\CC\times\DD}$, 
-    $\al(U,-) : \map{F(U,-)}{G(U,-)}{}{}$ and 
-    $\al(-,X) : \map{F(-,X)}{G(-,X)}{}{}$.
+    $\al_{U,-} : \map{F(U,-)}{G(U,-)}{}{}$ and 
+    $\al_{-,X} : \map{F(-,X)}{G(-,X)}{}{}$.
   \end{enumerate}
 \end{prop}
+\begin{proof}
+  Straight forward.
+\end{proof}
 
 \begin{dfn}[Adjunction]
-  \hypertarget{adjunction}{}
+  \link{adjunction}
   
   Let $R : \map{\CC}{\DD}{\CAT}{}$ and $L : \map{\DD}{\CC}{\CAT}{}$.
   We have the two functors 
@@ -69,7 +73,7 @@
 \end{dfn}
 
 \begin{prop}[Universal Morphism Characterisation of Adjunction]
-  \hypertarget{uniprop_char_adj}{}
+  \link{uniprop_char_adj}{}
 
   Let $R : \map{\CC}{\DD}{\CAT}{}$.
   Then the following are equivalent : 
@@ -111,9 +115,9 @@
       & R(g \circ L(f)) \circ \eta(X) = R(g) \circ \eta(Y) \circ f
       & \\
       & g \ar[u,mapsto] \ar[r,mapsto] & R(g)\circ\eta(Y) \ar[u,mapsto] & \\
-      \mor{L(Y)}{U}{\CC} \ar[uuu,"h^{L(f)}"]
+      \mor{L(Y)}{U}{\CC} \ar[uuu,"(h^{L(f)})_U"]
         \ar[rrr,"R(-)\circ\eta(Y)"{swap}]
-      & & & \mor{Y}{R(U)}{\DD} \ar[uuu,"h^f"{swap}]
+      & & & \mor{Y}{R(U)}{\DD} \ar[uuu,"(h^f)_U"{swap}]
     \end{tikzcd}
   \end{figure}
   Thus the isomorphism $\mor{L(X)}{-}{\CC} \cong \mor{X}{R(-)}{\DD}$
@@ -134,7 +138,7 @@
 \end{proof}
 
 \begin{prop}[Uniqueness of Adjoints]
-  \hypertarget{adj_unique}{}
+  \link{adj_unique}{}
 
   Let $R, R_1 : \map{\CC}{\DD}{\CAT}{}$, $L, L_1: \map{\DD}{\CC}{\CAT}{}$.
   Then \begin{enumerate}
@@ -175,10 +179,13 @@
 
 \begin{rmk}
   There is another characterisation of adjunctions.
+  This may be skipped on first reading since 
+  in practice, the special case of Galois connection happens more often and 
+  the proofs become much easier. 
 \end{rmk}
 
 \begin{prop}[Unit/Counit Characterisation of Adjunction]
-  \hypertarget{unit_char_adj}{}
+  \link{unit_char_adj}{}
   
   Let $R : \map{\CC}{\DD}{\CAT}{}$ and $L : \map{\DD}{\CC}{\CAT}{}$.
   Then the following are equivalent : 
@@ -319,4 +326,151 @@
 
 \begin{dfn}[Free Functors]\link{free}
   
+  Let $\CC$ be a subcategory of $\DD$ and 
+  $L : \DD \to \CC$ be a functor. 
+  Then $L$ is called a \emph{free functor from $\DD$ to $\CC$} when 
+  it is left adjoint to the forgetful functor from $\CC$ to $\DD$. 
+  Note that if it exists, $L$ is then unique up to natural isomorphism,
+  so it is customary to called it \emph{the} free functor. 
 \end{dfn}
+
+\begin{eg}[Adjunctions]
+  
+  The adjunctions hinted at in \linkto{eg:functors}{section 2}.
+
+  First, a list of free, forgetful adjunctions.
+  \begin{itemize}
+    \item (Free Group) 
+    What we previously said about taking free groups is precisely 
+    the a fact that it's a universal morphism from $S$ to the forgetful functor.
+    The forgetful functor is a right adjoint.
+    Its left adjoint is taking free groups. 
+    \[
+      \GRP(\<-\>,\star) \iso \SET(-,\star)
+    \]
+    \item (Free Left Module over a Ring) Similarly, 
+    for a ring $R$, 
+    taking free left modules over a set is a left adjoint to forgetful 
+    $R\MOD \to \SET$. 
+    \[
+      R\MOD(R^{\oplus(-)},\star) \iso \SET(-,\star)
+    \]
+    \item (Free Commutative Algebra over a Ring)
+    For a commutative ring $K$, \[
+      \CALG(K)(K[-],\star) \iso \SET(-,\star)
+    \]
+    \item (Extension and Contraction of Scalars)
+    Let $B$ be a commutative algebra over $A$ 
+    ($A$ is commutative by definition).
+    Then extension of scalars is the free functor left adjoint to
+    the forgetful $B\MOD \to A\MOD$. \[
+      B\MOD((-) \otimes_A B, \star) \iso A\MOD(-,\star)
+    \]
+    \item (Localization of Modules)
+    Let $A$ be a commutative ring and $S \subs A$ a multiplicative set. 
+    Then localization with respect to $S$ is the free functor
+    left adjoint to the forgetful $S\inv A \MOD \to A\MOD$. \[
+      S\inv A\MOD(S\inv(-), \star) \iso A\MOD(-,\star)
+    \]
+    Note that by \linkto{adj_unique}{uniqueness of adjoints},
+    this can be seen as a special case of extension and contraction of scalars
+    via the commutative $A$-algebra $S\inv A$.
+
+    \item (Symmetric Algebra)
+    Let $A$ be a commutative ring. 
+    Then taking symmetric algebas of modules is the free functor 
+    left adjoint to the forgetful $\CALG(A) \to A\MOD$.
+    \[
+      \CALG(A)(Symm(-),\star) \iso A\MOD(-,\star)
+    \]
+
+    \item (Discrete Topology)
+    Giving sets the discrete topology is the free functor left adjoint to 
+    the forgetful $\TOP \to \SET$. 
+    \[
+      \TOP((-,2^-),\star) \iso \SET(-,\star)
+    \]
+
+    \item (Free Category on a Pre-Ordered Set)
+    As \linkto{eg:cat_ord}{previously discuessed},
+    every pre-ordered set can be made into a category by considering 
+    the relation $\leq$ as morphisms. 
+    This is the free functor left adjoint to the forgetful 
+    $\CAT \to \ORD$, where we see any category $\CC$ as a pre-ordered set by
+    declaring for $U, V \in \obj{\CC}$, $U \leq V := \CC(U,V) \neq \nothing$.
+
+  \end{itemize}
+
+  A list of adjunctions, 
+  themed ``moving structures on objects across morphisms''. 
+  \begin{itemize}
+    \item (Image, Preimage of ``Substructures'')
+    Let $f : U \to V$ be a morphism of sets. 
+    Then \[
+      2^U(-,f\inv(\star)) \iso 2^V(f(-),\star)
+    \]
+    If $f$ is instead a morphism of groups,
+    then this upgrades to \[
+      \mathbf{Sub}\GRP(U)(-,f\inv(\star)) \iso 
+      \mathbf{Sub}\GRP(V)(f(-),\star)
+    \]
+    If $f$ is instead a morphism of rings, 
+    \[
+      \mathbf{Sub}\RING(U)(-,f\inv(\star)) \iso 
+      \mathbf{Sub}\RING(V)(f(-),\star)
+    \]
+    If $f$ is instead a morphism of left $R$-modules for some 
+    ring $R$, \[
+      \mathbf{Sub}R\MOD(U)(-,f\inv(\star)) \iso
+      \mathbf{Sub}R\MOD(V)(f(-),\star)
+    \]
+    If $f$ is instead a morphism of $K$-algebras for some commutative ring $K$,
+    \[
+      \mathbf{Sub}K\ALG(U)(-,f\inv(\star)) \iso 
+      \mathbf{Sub}K\ALG(V)(f(-),\star)
+    \]
+    \item (Image, Preimage of Filters)
+    Let $f : U \to V$ be a morphism of sets. 
+    Then \[
+      \fil(U)(-,{f}\inv(\star)) \iso \fil(V)(f_{\fil}(-),\star)
+    \]
+    where for a filter $F$ on $U$,
+    $f_{\fil}(F) := \set{W \subs V \st f\inv W \in F}$.
+  \end{itemize}
+
+  % Given a category $\CC$ with finite products,
+  % for a fixed $Y \in \obj{\CC}$, 
+  % $(-)\times Y : \CC \to \CC$ is functorial. 
+  % Fixing another $Z \in \obj{\CC}$,
+  % an \emph{exponential object} $(Z^Y,ev)$ is a universal morphism 
+  % from $(-)\times Y$ to $Z$.
+  The following is a list of instances of ``exponential objects''.
+  \begin{itemize}
+    \item Let $Y$ be a set. 
+    Taking the cartesian product with $Y$, 
+    $(-)\times Y : \SET \to \SET$, is functorial.
+    Then we have the adjunction between $(-)\times Y$ and $h^Y$ : 
+    \[
+      \SET((-)\times Y, \star) \iso \SET(-, \SET(Y, \star))
+    \]
+    \item Let $N$ be an $A$-module where $A$ is a commutative ring. 
+    Then $(-) \otimes_A N : A\MOD \to A\MOD$ is functorial.
+    On the other hand, the coYoneda embedding $h^N$ of $N$ is naturally 
+    a functor $A\MOD \to A\MOD$. 
+    Then we have the adjunction between $(-)\otimes_A N$ and $h^N$ : 
+    \[
+      A\MOD((-)\otimes_A N, \star) \iso A\MOD(-,h^N(\star))
+    \]
+    \item Let $\DD$ be a category. 
+    Then taking the product of categories with $\DD$ yields a 
+    functor $(-) \times \DD : \CAT \to \CAT$.
+    On the other hand, the coYoneda embedding of $\DD$ is naturally a functor
+    $h^\DD : \CAT \to \CAT$. 
+    Then we have the adjunction : \[
+      \CAT((-)\times \DD, \star) \iso \CAT(-,h^\DD(\star))
+    \]
+  \end{itemize}
+
+  (TODO : Add to this list)
+
+\end{eg}

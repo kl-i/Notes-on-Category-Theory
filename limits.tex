@@ -1,11 +1,14 @@
-\begin{dfn}[(Co)Diagrams]\link{diagrams}
+\begin{rmk}
+  The idea that limits and colimits formalize is 
+  that of making new objects out of given objects within a category
+  in the ``most efficient way possible''. 
+\end{rmk}
+
+\begin{dfn}[Diagrams]\link{diagrams}
   
   Let $\II, \CC$ be categories. 
-  Then an \emph{$\II$-diagram in $\CC$} is 
+  Then an \emph{$\II$-shaped diagram in $\CC$} is 
   a covariant functor from $\II$ to $\CC$. 
-  Dually, an \emph{$\II$-codiagram} is a contravariant functor 
-  from $\II$ to $\CC$,
-  i.e. an $\II\op$-diagram. 
 \end{dfn}
 
 \begin{rmk}
@@ -21,59 +24,72 @@
     \item For all $\phi : \map{i}{j}{\II}{}$, 
     $\De(U)(\phi) := \id{U}$.
   \end{enumerate}
-  Dually, we have the \emph{constant codiagram $\De\op(U)$} defined as : 
-  \begin{enumerate}
-    \item For all $i \in \obj{\II}$, $\De\op(U)(i) := U$. 
-    \item For all $\phi : \map{i}{j}{\II\op}{}$, 
-    $\De(U)(\phi) := \id{U}$.
-  \end{enumerate}
-\end{dfn}
-
-\begin{prop}[Functoriality of Constant (Co)Diagrams]\link{const_funk}
-  
-  Let $\II, \CC$ be categories. 
   Then $\De : \map{\CC}{\CC^\II}{}{}$.
-  Dually, $\De\op : \map{\CC}{\CC^{\II\op}}{}{}$.
-\end{prop}
-
-\begin{dfn}[(Co)Limits of (Co)Diagrams]\link{limit}
-  
-  Let $\II, \CC$ be categories, $X$ a $\II$-diagram in $\CC$,
-  and $Y$ a $\II$-codiagram in $\CC$.
-
-  Then a \emph{limit of $X$} is a universal morphism 
-  from $\De$ to $X$. 
-  If a limit of $X$ exists, 
-  it is \linkto{canonical}{canonical} and 
-  referred to as \emph{the} limit,
-  denoted $(\LIM{X}{}, \pi_X)$.
-  
-  Dually, a \emph{colimit of $Y$} is a universal morphism from $Y$ to $\De\op$. 
-  If a colimit of $Y$ exists, 
-  it is canonical and referred to as \emph{the} colimit, 
-  denoted with $(\COLIM{Y}{}, \io_Y)$.
+  % Dually, we have the \emph{constant codiagram $\De\op(U)$} defined as : 
+  % \begin{enumerate}
+  %   \item For all $i \in \obj{\II}$, $\De\op(U)(i) := U$. 
+  %   \item For all $\phi : \map{i}{j}{\II\op}{}$, 
+  %   $\De(U)(\phi) := \id{U}$.
+  % \end{enumerate}
 \end{dfn}
 
-\begin{rmk}
+% \begin{prop}[Functoriality of Constant (Co)Diagrams]\link{const_funk}
+%   
+%   Let $\II, \CC$ be categories. 
+%   Then $\De : \map{\CC}{\CC^\II}{}{}$.
+%   Dually, $\De\op : \map{\CC}{\CC^{\II\op}}{}{}$.
+% \end{prop}
+
+\begin{dfn}[(Co)Limits of Diagrams]\link{limit}
+  
+  Let $\II, \CC$ be categories, $X$ a $\II$-shaped diagram in $\CC$.
+  % and $Y$ a $\II\op$-shaped diagram in $\CC$.
+  Let $(U,u) \in \obj{\De\darrow X}$. 
+  Then the following are equivalent : 
+  \begin{itemize}
+    \item $(U,u)$ is a universal morphism from $\De$ to $X$.
+    \item $U$ represents the functor $\CC^\II(\De(-),X) : \CC\op \to \SET$,
+    i.e. $\CC^\II(\De(-),X) \iso \CC(-,U)$ where $\id{U}$ corresponds to $u$.
+  \end{itemize}
+  When any (and thus all) of these are true,
+  $(U,u)$ is called a \emph{limit of $X$}.
+  By abuse of language, we sometimes simply say $U$ is a limit of $X$.
+  If a limit of $X$ exists, 
+  it is \linkto{canonical}{canonical}.
+  So we will say \emph{the} limit to refer to \emph{any} limit,
+  and denote it using $(\LIM X, \pi_X)$.
+  When a limit exists, we will say \emph{the} limit exists.
+  
+  Dually, let $(V,v) \in \obj{X\darrow \De}$.
+  Then the following are equivalent : 
+  \begin{itemize}
+    \item $(V,v)$ is a universal morphism from $X$ to $\De$.
+    \item $V$ represents the functor $\CC^\II(X,\De(-)) : \CC \to \SET$,
+    i.e. $\CC(V,-) \iso \CC^\II(X,\De(-))$ where $\id{V}$ corresponds to $v$.
+  \end{itemize}
+  When any (and thus all) of these are true,
+  $(V,v)$ is called a \emph{colimit of $X$}.
+  By abuse of language, we sometimes simply say $V$ is a colimit of $X$.
+  If a colimit of $X$ exists, it is canonical.
+  So we will say \emph{the} colimit to refer to \emph{any} colimit,
+  and denote it with $(\COLIM X, \io_X)$.
+  When a colimit exists, we will say \emph{the} colimit exists.
+\end{dfn}
+
+\begin{rmk}[Some Terminology]
   Sometimes limits are also called \emph{projective limits},
   and colimits are called \emph{injective limits}. 
+  Also, objects in $\De\darrow X$ are often called \emph{cones}.
+  Dually, objects in $X\darrow\De$ are called \emph{cocones}.
+  In my experience,
+  being able to ``see the (co)cones'' has been great
+  for keeping a clear mind in later proofs.
 \end{rmk}
 
-\begin{dfn}[(Co)Completeness]\link{complete}
-  
-  Let $\CC$ be a category. 
-  Then it is called \emph{complete} when 
-  for all ``small'' categories $\II$ and diagrams $X : \map{\II}{\CC}{\CAT}{}$,
-  there exists the limit of $X$.
-
-  Dually, it is called \emph{cocomplete} when 
-  for all ``small'' categories $\II$ and 
-  codiagrams $Y : \map{\II\op}{\CC}{\CAT}{}$,
-  there exists the colimit of $Y$.
-\end{dfn}
-
 \begin{rmk}
-  We now cover important examples of limits and colimits. 
+  We now cover important instances of (co)limits.
+  These are special in the sense that 
+  \linkto{char_complete}{all (co)limits can be built from them}. 
 \end{rmk}
 
 \begin{dfn}[Discrete Category]\link{discrete}
@@ -85,41 +101,45 @@
 \end{dfn}
 
 \begin{rmk}
-  Note that for a discrete category $\II$,
-  $\II$ and $\II\op$ are isomorphic in an obvious way. 
-  Consequently, it is best to think of 
-  $\II$-diagrams and $\II$-codiagrams as ``the same''.
+  Taking discrete categories is the free functor adjoint to 
+  the forgetful functor from $\CAT$ to $\SET$ by taking the set of objects.
+  \footnote{
+    Russell cries, but we shall ignore him. 
+  }
 \end{rmk}
 
 \begin{dfn}[(Co)Products]\link{prod}
   
-  Let $\CC$ be a category and $\II$ a discrete category. 
-
+  Let $\CC$ be a category and $\II$ a discrete category.
   Let $X$ be an $\II$-diagram in $\CC$.
-  Then the limit of $X$ is called the \emph{product of $X(i)$}.
-
-  Dually, let $Y$ be an $\II$-codiagram in $\CC$.
-  Then the colimit of $Y$ is called the \emph{coproduct of $Y(i)$}.
+  If a limit of $X$ exists,
+  it is called the \emph{product of $X(i)$}.
+  Dually, if a colimit of $X$ exists,
+  it is called the \emph{coproduct of $X(i)$}.
 
   In the special case of $I = \nothing$, 
   the product is called the \emph{final object of $\CC$}.
-  Dually, the coproduct is called the \emph{initial object of $\CC$}.
+  Dually, the empty coproduct is called the \emph{initial object of $\CC$}.
 \end{dfn}
 
 \begin{eg}[Final Objects]\link{eg_final}
   
+  (TODO)
 \end{eg}
 
 \begin{eg}[Initial Objects]\link{eg_initial}
   
+  (TODO)
 \end{eg}
 
 \begin{eg}[Products]\link{eg_prod}
   
+  (TODO)
 \end{eg}
 
 \begin{eg}[Coproducts]\link{eg_coprod}
   
+  (TODO)
 \end{eg}
 
 \begin{dfn}[(Co)Equalizers]\link{equalizer}
@@ -136,19 +156,20 @@
   where there is a morphism $i : \map{0}{1}{\II}{}$ for all $i \in I$. 
 
   Let $X$ be an $\II$-diagram in $\CC$. 
-  Then the limit of $X$ is called 
-  the \emph{equalizer of $X(i)$'s}. 
-  Dually, let $Y$ be an $\II$-codiagram in $\CC$. 
-  Then the colimit of $Y$ is called the 
-  \emph{coequalizer of $Y(i)$'s}.
+  If a limit of $X$ exists, 
+  it is called the \emph{equalizer of $X(i)$'s}. 
+  Dually, if a colimit of $X$ exists, 
+  it is called the \emph{coequalizer of $X(i)$'s}.
 \end{dfn}
 
 \begin{eg}[Equalizers]
   
+  (TODO)
 \end{eg}
 
 \begin{eg}[Coequalizers]
   
+  (TODO)
 \end{eg}
 
 \begin{dfn}[Pullbacks and Pushouts]\link{pullback}
@@ -173,7 +194,15 @@
     \item For all $i \in I$, $\mor{i}{*}{\II} = \set{\phi(i)}$.
   \end{enumerate}
   Then a pullback over $U$ is equivalently the limit of 
-  an $\II$-diagram $X$ with $X(*) = U$. 
+  an $\II$-shaped diagram $X$ with $X(*) = U$. 
   Dually, a pushout under $U$ is equivalently the colimit of 
-  an $\II$-codiagram $Y$ with $Y(*) = U$.
+  an $\II\op$-shaped diagram $Y$ with $Y(*) = U$.
+  \footnote{
+    We could have define colimits only for $\II\op$-shaped diagrams 
+    so that coproduct, coequalizer, pushout are all related to
+    their respective duals in the same way. 
+    However, other than this, 
+    doing things this way has little practical nor theoretical significance,
+    hence my choice of defining colimits over $\II$-shaped diagrams.
+  }
 \end{dfn}

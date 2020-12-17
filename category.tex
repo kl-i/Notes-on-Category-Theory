@@ -70,21 +70,16 @@ See the example of preordered sets as categories at
     $\obj{\CRING}$ containing commutative rings and 
     $\CRING(U,V)$ containing ring homomorphisms from $U$ to $V$.
     $\CRING$ is a subcategory of $\RING$. 
-    \item Let $R$ be a commutative ring. 
-<<<<<<< HEAD
-    Then the \emph{category of $R$-modules} $\MOD$ has 
-    $\obj{\MOD}$ containing $R$-modules and 
-    $\MOD(U,V)$ contains $R$-linear maps from $U$ to $V$.
-=======
-    Then the \emph{category of $R$-modules} $\MOD(R)$ has 
-    $\obj{\MOD(R)}$ containing $R$-modules and 
-    $\MOD(R)(U,V)$ contains $R$-linear maps from $U$ to $V$.
->>>>>>> master
+    \item Let $R$ be a ring. 
+    Then the \emph{category of left $R$-modules} $R\MOD$ has 
+    $\obj{R\MOD}$ containing left $R$-modules and 
+    $R\MOD(U,V)$ contains $R$-linear maps from $U$ to $V$.
     This is a subcategory of $\AB$. 
     \item Let $R$ be a commutative ring. 
-    Then the \emph{category of $R$-algebras} $\ALG(R)$ has 
-    $\obj{\ALG(R)}$ containing pairs $(S,\si)$ where $\si : \map{R}{S}{\CRING}{}$.
-    $\ALG(R)((U,u),(V,v))$ contains $f : \map{U}{V}{\CRING}{}$ such that 
+    Then the \emph{category of $R$-algebras} $R\ALG$ has 
+    $\obj{R\ALG}$ containing pairs $(S,\si)$ where 
+    $\si : \map{R}{S}{\RING}{}$.
+    $R\ALG((U,u),(V,v))$ contains $f : \map{U}{V}{\RING}{}$ such that 
     $f \circ u = v$. 
   \end{enumerate}
 \end{eg}
@@ -131,15 +126,20 @@ See the example of preordered sets as categories at
 
 \begin{eg}[Partially Ordered Sets]\link{eg:poset}~
   \begin{enumerate}
-    \item Let $X$ be a set. Then its powerset $(2^X,\leq) \in \obj{\POSET}$. 
+    \item Let $X$ be a set. 
+    Then its powerset $(2^X,\subs) \in \obj{\POSET}$.
     \item Let $X$ be a topological space. 
-    Then the set of its open sets $\mathrm{Open}\,X$ is a partially ordered set.
+    Then the set of its opens $(\tau_X,\subs) \in \obj{\POSET}$.
     \item Let $G$ be a group. 
-    Then the set of its subgroups is in $\obj{\POSET}$.
-    \item Let $R$ be a commutative ring and $M$ be an $R$-module.
-    Then the set of $R$-submodules of $M$ is in $\obj{\POSET}$.
+    Then the set of its subgroups $(\SUB\GRP(G),\subs)\in\obj{\POSET}$.
+    \item Let $R$ be a ring and $M$ be a left $R$-module.
+    Then the set of left $R$-submodules of $M$, $R\SUB\MOD(M)$,
+    is in $\obj{\POSET}$.
     \item Let $R$ be a commutative ring and $(S,\si)$ an $R$-algebra. 
-    Then the set of all $R$-subalgebras of $S$ is in $\obj{\POSET}$. 
+    Then the set of all $R$-subalgebras of $S$, $R\SUB\ALG(S)$, 
+    is in $\obj{\POSET}$. 
+    \item Let $X$ be a set and $\fil X$ the set of all filters on $X$.
+    Then $(\fil X,\subs) \in \obj{\POSET}$. 
     \item Consider the relation on $\N$ that is $a \dvd b$. 
     This is a partial order on $\N$. 
   \end{enumerate}
@@ -147,10 +147,27 @@ See the example of preordered sets as categories at
 
 \begin{eg}[A Group as a Category]\link{eg:cat_group}
   
-  A group $G$ is equivalent to 
+  The data of a group $G$ is equivalent to 
   a category $G$ where there is only one object $\bullet$ and 
   all morphisms are isomorphisms. 
 
   A direct generalization is a \emph{groupoid} : 
   a category where every morphism is an isomorphism. 
+\end{eg}
+
+\begin{eg}[Vector Spaces together with a Basis]\link{eg:vec_basis}
+  Let $K$ be a field. 
+  Define a category $\CC$ as follows : 
+  \begin{itemize}
+    \item objects are pairs $(V,B)$ where $V$ is a $K$-vector space and 
+    $B$ is a basis of $V$. 
+    \item For $(V,B_V), (W,B_W)$ objects in $\CC$, 
+    define $\CC((V,B_V),(W,B_W))$ as the set of $K$-linear maps 
+    from $V$ to $W$ such that maps $B_V$ into $B_W$.
+    \item For every $K$-vector space with a basis $(V,B_V)$, 
+    $\id{(V,B_V)}$ is defined to be the identity map of $V$. 
+    \item Composition of the underlying $K$-linear maps of morphisms yields
+    another morphism in this category. 
+  \end{itemize}
+  This category has \linkto{eg:functors}{nice connections} to change of basis. 
 \end{eg}

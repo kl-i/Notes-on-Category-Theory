@@ -27,6 +27,9 @@
 % Shortcuts
 
 % % Local to this project
+\renewcommand\labelitemi{--} % Changes itemize bullet to dash
+\DeclareMathOperator{\fil}{Fil}
+\newcommand{\SUB}{\mathbf{Sub}}
 
 % % Misc
 \newcommand{\brkt}[1]{\left(#1\right)}
@@ -88,6 +91,8 @@
 \newcommand{\U}{\mathbb{U}}
 \newcommand{\V}{\mathbb{V}}
 \newcommand{\Z}{\mathbb{Z}}
+\newcommand{\1}{\mathbbm{1}}
+\newcommand{\2}{\mathbbm{2}}
 
 % % Mathcal
 \newcommand{\BB}{\mathcal{B}}
@@ -123,6 +128,7 @@
 
 % % Category Theory
 \newcommand{\obj}[1]{\mathrm{Obj}\left(#1\right)}
+\DeclareMathOperator{\arr}{Arr}
 \newcommand{\Hom}[3]{\mathrm{Hom}_{#3}(#1, #2)\,}
 \newcommand{\mor}[3]{#3\left(#1, #2\right)\,}
 \newcommand{\End}[2]{\mathrm{End}_{#2}#1\,}
@@ -138,6 +144,7 @@
 \newcommand{\MOD}{\mathbf{Mod}}
 \newcommand{\VEC}{\mathbf{Vec}}
 \newcommand{\ALG}{\mathbf{Alg}}
+\newcommand{\CALG}{\mathbf{CAlg}}
 \newcommand{\PSH}{\mathbf{PSh}}
 \newcommand{\SH}{\mathbf{Sh}}
 \newcommand{\ORD}{\mathbf{Ord}}
@@ -369,15 +376,30 @@
 }
 
 \begin{document}
-\title{Notes Category Theory}
+\title{Notes on Category Theory}
 \author{Ken Lee}
 \date{Summer 2020}
 \maketitle
 
 \tableofcontents
 
-In this paper, we do not pay attention to foundational set-theoretic issues
-like the ``set'' of all sets should be a class.  
+
+Current view of category theory : 
+% it is a language designed to be able to give unified descriptions of 
+% various phenomena which occur in different areas of mathematics.
+a single language / point-of-view in which you can do most of mathematics. 
+(No one can save the analysts.)
+It is a nice tool for organization of results.
+When approaching new content, 
+I now constantly ask myself these three questions : 
+\begin{itemize}
+  \item Is this a universal property?
+  \item Is this an adjunction?
+  \item Is this just Yoneda?
+\end{itemize}
+
+In this document, we do not pay attention to foundational set-theoretic issues
+like the ``set'' of all sets being be a proper class.  
 
 \section{Categories}
 \input{category}
@@ -393,7 +415,9 @@ like the ``set'' of all sets should be a class.
 \input{limits}
 \section{Completeness}
 \input{complete}
-\section{Abelian Categories}
-\input{abelian}
+\section{Continuity}
+\input{continuity}
+% \section{Abelian Categories}
+% \input{abelian}
 
 \end{document}

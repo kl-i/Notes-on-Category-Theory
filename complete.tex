@@ -1,56 +1,325 @@
+\begin{dfn}[Finite Categories]\link{fin}
+  
+  Let $\CC$ be a category. 
+  Then it is called \emph{finite} when 
+  $\obj{\CC}$ is finite and for any $U, V \in \obj{\CC}$,
+  $\CC(U,V)$ is finite. 
+\end{dfn}
+
+\begin{dfn}[(Finite) (Co)Completeness]\link{complete}
+  
+  Let $\CC$ be a category. 
+  Then it is called \emph{(finitely) complete} when 
+  for all (finite) categories $\II$ and diagrams $X : \map{\II}{\CC}{\CAT}{}$,
+  there exists the limit of $X$ in $\CC$.
+
+  Dually, it is called \emph{(finitely) cocomplete} when 
+  for all (finite) categories $\II$ and 
+  diagrams $X : \map{\II}{\CC}{\CAT}{}$,
+  there exists the colimit of $X$ in $\CC$.
+\end{dfn}
+
+\begin{rmk}
+  If a category $\CC$ has nice constructions,
+  then for any category $\II$, $\CC^\II$ will often inherit these constructions.
+  This is the following result. 
+\end{rmk}
+
+\begin{prop}[Characterisation of (Co)Limits of Functors]
+  \link{char_lim_funk}
+  
+  Let $\CC, \DD$ be categories.
+  Let $X : \II \to \DD^\CC$ be an $\II$-shaped diagram of functors from 
+  $\CC$ to $\DD$.
+
+  Let $(F,\phi) \in \obj{\De\darrow X}$.
+  For each $U \in \obj{\CC}$,
+  we obtain a functor $X_U : \II \to \DD, i \in \obj{\II} \mapsto X(i,U)$
+  by restricting the second argument to $U$
+  (mapping morphisms is obvious). 
+  In a similar way, we obtain $(F(U),\phi_U) \in \obj{\De\darrow X_U}$.
+  Then the following are equivalent : 
+  \begin{itemize}
+    \item For all $U \in \obj{\CC}$, 
+    $(F(U),\phi_U)$ is a limit of $X_U$.
+    \item $(F,\phi)$ is a limit of $X$ and for every $U\in\obj{\CC}$,
+    the limit of $X_U$ exists in $\DD$.
+  \end{itemize}
+  Paraphrasing : if $\DD$ has limits of $\II$-shaped diagrams,
+  then so does $\DD^\CC$.
+
+  Dually, let $(F,\phi) \in \obj{X\darrow\De}$.
+  For each $U \in \obj{\CC}$,
+  we obtain a functor $X^U : \II \to \DD, i \in \obj{\II} \mapsto X(i,U)$
+  (mapping morphisms is obvious). 
+  In a similar way, we obtain $(F(U),\phi^U) \in \obj{X^U\darrow\De}$.
+  Then the following are equivalent : 
+  \begin{itemize}
+    \item For all $U \in \obj{\CC}$, 
+    $(F(U),\phi^U)$ is a colimit of $X^U$.
+    \item $(F,\phi)$ is a colimit of $X$ and for every $U \in \obj{\CC}$,
+    the colimit of $X^U$ exists in $\DD$.
+  \end{itemize}
+  Paraphrasing : if $\DD$ has colimits of $\II$-shaped diagrams,
+  then so does $\DD^\CC$.
+\end{prop}
+\begin{proof}
+  
+  $(\implies)$
+  Suppose for all $U \in \obj{\CC}$, 
+  $(F(U),\phi_U)$ is a limit of $X_U$.
+  We show that $(F,\phi)$ has the desired UP.
+  Let $(G,\ga) \in \obj{\De\darrow X}$.
+  For each $U \in \obj{\CC}$,
+  define $(G(U),\ga_U) \in \obj{\De\darrow X_U}$
+  by restricting the second argument to $U$.
+  Then by the UP of limits, 
+  we have a unique morphism $\LIM \ga_U \in 
+  \De\darrow X_U((G(U),\ga_U),(F(U),\phi_U))$.
+  \begin{cd}
+    \De(G(U)) \ar[r,"\De(\LIM \ga_U)", dashed] \ar[rd,"\ga_U"{swap}] & 
+    \De(F(U)) \ar[d,"\phi_U"] &
+    \De(G) \ar[r,"\De(\LIM \ga)", dashed] \ar[rd,"\ga"{swap}] & 
+    \De(F) \ar[d,"\phi"] \\
+    & 
+    X_U &
+    & 
+    X
+  \end{cd}
+  Then again by the UP of limits,
+  the left triangle is functorial in $U$,
+  so the collection of $(\LIM \ga_U)_{U \in \obj{\CC}}$ forms a 
+  $\LIM \ga \De\darrow X((G,\ga),(F,\phi))$.
+  The uniqueness of $\LIM \ga$ comes from 
+  the componentwise uniqueness of $(\LIM \ga_U)_{U \in \obj{\CC}}$.
+
+  $(\limplies)$
+  Let $(F,\phi)$ be a limit of $X$ and 
+  suppose for every $U \in \obj{\CC}$,
+  the limit of $X_U$ exists. 
+  Then we can use the forward implication to explicitly construct a limit 
+  $(\bar{F},\bar{\phi})$ of $X$ by defining
+  the components $(\bar{F}(U),\bar{\phi}_U)$ to be limits of $X_U$.
+  Functoriality of $\bar{F}$ comes from the UP of limits in each component.
+  Since limits are canonical,
+  we have a unique isomorphism between $(F,\phi)$ and $(\bar{F},\bar{\phi})$.
+  Restricting to each component yields an isomorphism of cones 
+  $(F(U),\phi_U) \iso (\bar{F}(U),\bar{\phi}_U)$ for every $U \in \obj{\CC}$.
+  Since $(\bar{F}(U),\bar{\phi}_U)$ is by construction a limit of $X_U$,
+  and being isomorphic to the limit \linkto{iso_uni_implies_uni}{implies}
+  being a limit.
+  We conclude that $(F(U),\phi_U)$ is a limit of $X_U$ for every $U$.
+
+  The dual argument is similar. 
+\end{proof}
+
+\begin{rmk}
+  The following result gives an easier check for (co)completeness.
+\end{rmk}
+
 \begin{prop}[Characterisation of Completeness, Cocompleteness]
   \link{char_complete}
   
-  
+  Let $\CC$ be a category. 
+  Then the following are equivalent : 
+  \begin{itemize}
+    \item $\CC$ is (finitely) complete.
+    \item $\CC$ has (finite) products and (finite) equalizers.
+  \end{itemize}
+  Dually, the following are equivalent : 
+  \begin{itemize}
+    \item $\CC$ is (finitely) cocomplete.
+    \item $\CC$ has (finite) coproducts and (finite) coequalizers. 
+  \end{itemize}
 \end{prop}
+\begin{proof}
+  For fun, we prove the dual argument instead for once.
+  It suffices to prove the reverse implication. 
+  Let $X : \II \to \CC$ be a diagram. 
+  Define the \emph{arrow category of $\II$} as follows : 
+  take the free category on the partially ordered set $\2 := \set{0,1}$ and 
+  $\arr(\II) := \II^{\2}$.
+  Define \emph{source} and \emph{target} functions 
+  $s, t : \obj{\arr(\II)} \to \obj{\II}, (\phi : i \to j) \mapsto i, j$
+  respectively. 
+  Let $(\coprod_{\phi \in \obj{\arr\II}} X_{s(\phi)},\io)$
+  be the coproduct of $X_{s(\phi)}$ across all arrows $\phi$ in $\II$ and 
+  $(\coprod_{i \in \obj{\II}} X_i,\lift{}{})$ the coproduct of 
+  $X(i)$ across all $i$ in $\II$.
+  Now consider the following diagram : 
+  \begin{cd}
+    \coprod_{\phi \in \obj{\arr\II}} X_{s(\phi)} 
+      \ar[r,"\al",yshift = 1mm] \ar[r,"\be"{swap},yshift = -1mm]&
+    \coprod_{i \in \obj{\II}} X_i
+  \end{cd}
+  where $\al$ is defined using the UP of the coproduct via 
+  for all $\phi \in \obj{\arr\II}$, $\al \circ \io_\phi := \lift{s(\phi)}{}$;
+  $\be$ is also defined using the UP of the coproduct, but via 
+  for all $\phi \in \obj{\arr\II}$, 
+  $\be\circ \io_\phi := \lift{t(a)}{} \circ X(\phi)$. 
+  It is then straightforward to check that 
+  the coequalizer of $\al,\be$ with obvious morphisms from $X$ into it
+  is a colimit of $X$. 
+  Note that the above proof still works for finite categories $\II$. 
 
-\begin{prop}[$\SET$ Complete]\label{set_complete}
+  The non-dual argument is similar. 
+\end{proof}
+
+\begin{rmk}
+  We now proceed to show the (co)completeness of some standard categories.
+  As this is unimportant to the theory, 
+  the reader may skip to the next section. 
   
+  For fun, we will not use the above characterisation,
+  though the constructions are of similar nature. 
+\end{rmk}
+
+\begin{prop}[$\SET$ (Co)Complete]\link{set_complete}
+  
+  Let $I$ be a category and $X$ an $I$-shaped diagram in $\SET$.
+
+  Consider the set $\SET^\II(\De(1),X)$ where $1$ is a singleton set.
+  There is an obvious $\pi_X : \De(\SET^\II(\De(1),X)) \to X$.
+  Then $(\SET^\II(\De(1),X),\pi_X)$ is a limit of $X$ in $\SET$.
+
+  Dually, we construct the colimit of $X$ as follows. 
+  For every $(i,x_i) \in \bigsqcup_{i \in I} X_i$,
+  define $[(i,x_i)]$ to be the subset of $(j,x_j) \in \bigsqcup_{i \in I} X_i$
+  such that there exists 
+  a ``zig zag of elements and morphisms in $X$ joining them''
+  (unenlightening to write down fully) : 
+  \begin{cd}[cramped]
+    (i,x_i) \ar[rd] & & 
+    (k_1, x_1) \ar[ld] \ar[rd] & & 
+    (k_n, x_n) \ar[ld] \ar[rd] & & 
+    (j,x_j) \ar[ld] \\
+    & (l_0,y_0) & 
+    & \cdots & 
+    & (l_n,y_n) & 
+  \end{cd}
+  Then $Q := \set{[(i,x_i)] \st (i,x_i) \in \bigsqcup_{i \in I} X(i)}$ forms
+  a partition of $\bigsqcup_{i \in I} X(i)$,
+  corresponding to the minimal equivalence relation generated by 
+  $(i,x_i) \sim (j,x_j) := \exists \phi \in I(i,j), X(\phi)(x_i) = x_j$.
+  There is an obvious morphism $\io_X : X \to \De(Q)$.
+  Then $(Q,\io_X)$ is a colimit of $X$.
+
 \end{prop}
+\begin{proof}
+  Straightforward.
+\end{proof}
 
-\begin{prop}[$\TOP$ Complete]\label{top_complete}
+\begin{prop}[$\TOP$ Complete]\link{top_complete}
   
+  Let $I$ be a category and $X$ an $I$-shaped diagram in $\TOP$.
+
+  Let $(\LIM_\SET X,\pi_X)$ be the limit of $X_\SET$,
+  obtained by forgeting from $\TOP$ to $\SET$.
+  Let $\LIM X$ be endowed with 
+  the topology generated by preimages of opens in components. 
+  Then for all $(Y,y) \in \obj{\De\darrow X_\SET}$ where $Y \in \obj{\TOP}$
+  and $\bar{y} \in \De\darrow X((Y,y),(\LIM_\SET X,\pi_X))$,
+  $\bar{y} \in \TOP(Y,\LIM X)$ if and only if 
+  $y \in \TOP^\II(\De(Y),X)$.
+  Hence, $\pi_X \in \TOP^\II(\De(\LIM X), X)$ and 
+  $(\LIM X, \pi_X)$ is a limit of $X$ in $\TOP$.
+
+  Dually, similar trick to turn the colimit in $\SET$ to colimit in $\TOP$ : 
+  take the topology generated by 
+  sets whose preimages are open in every component of the diagram $X$.
 \end{prop}
+\begin{proof}
+  Straightforward.
+\end{proof}
 
-\begin{prop}[$\GRP$ Complete]\label{grp_complete}
+\begin{prop}[$\GRP$ Complete]\link{grp_complete}
   
+  Let $I$ be a category and $X$ an $I$-shaped diagram in $\GRP$.
+
+  The construction $\SET^\II(\De(1),X)$ from 
+  the limit of $X$ as a diagram in $\SET$ has a group structure by
+  multiplying ``objectwise'' in the diagram $X$.
+  This makes $\pi_X \in \GRP^{\II}(\De(\SET^\II(\De(1),X)),X)$,
+  and hence $\SET^\II(\De(1),X)$ a limit of $X$ in $\GRP$.
+
+  Dually, we imitate the colimit construction in $\SET$ and consider 
+  the free product quotiented by the subgroup generated by 
+  ``eventually being equal in $X$'' : 
+  \[
+    \brkt{\bigsqcup_{i \in\II} X_i} /
+    \<(i,x_i)(j,x_j)\inv \st \exists\,\phi\in\II(i,j), X(\phi)(x_i) = x_j\>
+  \]
+  Then the above is a colimit of $X$.
+
 \end{prop}
+\begin{proof}
+  Straightforward. 
+\end{proof}
 
-\begin{prop}[$\RING$ Complete]\label{ring_complete}
+\begin{rmk}
+  We will show (co)completeness of modules over a ring first,
+  then show (co)completeness of rings,
+  since for the case of colimits, 
+  we will make use of the fact that $\RING$ forgets into $\AB = \Z\MOD$. 
+\end{rmk}
+
+\begin{prop}[$R\MOD$ Complete]\link{mod_complete}
   
+  Let $R \in \RING$, $\II$ a category, 
+  $X$ an $\II$-diagram in $R\MOD$.
+
+  The construction $\SET^\II(\De(1),X)$ from 
+  the limit of $X$ as a diagram in $\SET$ has an $R\MOD$ structure by
+  adding and scalar multiplying ``objectwise'' in the diagram $X$.
+  This gives the morphism $\pi_X \in R\MOD^{\II}(\De(\SET^\II(\De(1),X)),X)$,
+  and hence $\SET^\II(\De(1),X)$ a limit of $X$ in $R\MOD$.
+
+  Dually, we imitate the colimit construction in $\SET$ and consider 
+  the direct sum quotiented by the left $R$-submodule generated by 
+  ``eventually being equal in $X$'' : 
+  \[
+    \brkt{\bigoplus_{i\in\II} X_i} / 
+    R\set{(i,x_i) - (j,x_j) \st \exists\, \phi\in\II(i,j), X(\phi)(x_i) = x_j}
+  \]
+  Then the above is a colimit for $X$ in $R\MOD$.
 \end{prop}
+\begin{proof}
+  Straightforward.
+\end{proof}
 
-\begin{prop}[$\MOD$ Complete]\label{mod_complete}
+\begin{prop}[$\RING$ Complete]\link{ring_complete}
   
+  Let $\II$ be a category and $X$ an $\II$-shaped diagram in $\RING$.
+
+  The construction $\SET^\II(\De(1),X)$ from 
+  the limit of $X$ as a diagram in $\SET$ has a ring structure by
+  adding and multiplying ``objectwise'' in the diagram $X$.
+  Then $\pi_X \in \RING^{\II}(\De(\SET^\II(\De(1),X)),X)$,
+  and hence $\SET^\II(\De(1),X)$ a limit of $X$ in $\RING$.
+
+  Dually, things get nasty. 
 \end{prop}
+\begin{proof}
+  (Nasty things go here)
+  (TODO)
+\end{proof}
 
-\begin{prop}[Set-theoretic Characterisation of Limits and Colimits]
-  \link{set_char_lim}
-  
-  Let $X$ be an $\II$-shaped diagram in a category $\CC$ and 
-  $(U,u) \in \obj{\De\darrow X}$. 
-  We have an $\II$-shaped diagram in $\SET^{\CC\op}$ 
-  that is $h_X := h_{\star} \circ X$. 
-  We also have $h_{\De(U)} = \De(h_U)$ and 
-  the natural transformation $h_u : \map{\De(h_U)}{h_X}{}{}$. 
-  So $(h_U,h_u) \in \obj{\De\darrow h_X}$.
-  Then the following are equivalent. 
-  \begin{enumerate}
-    \item $(U,u)$ is a limit of $X$. 
-    \item $(h_U,h_u)$ is a limit of $h_X$.
-  \end{enumerate}
-\end{prop}
+\begin{rmk}
+  One may wonder : 
+  (1) Why are all the limits for these categories the same as in $\SET$? 
+  (2) Why do the colimits differ to $\SET$ for everything except $\TOP$?
 
-\begin{cor}[Right Adjoints commute with Limits,
-  Left Adjoints commute with Colimits]\label{cts}
-  
-\end{cor}
-
-\begin{dfn}[Filtered Sets and Filtered Colimits]\label{filtered}
-  
-\end{dfn}
-
-\begin{prop}[Filtered Colimits commute with Finite Limits]
-  \label{filtered_colimits_commute}
-  
-\end{prop}
+  The \linkto{adjoint_cts}{answer} is the related to adjunctions,
+  and is the focus of the next section. 
+  In a nutshell : 
+  all of the following categories are subcategories of $\SET$
+  which admit free functors. 
+  This implies that the forgetful functor preserves limits.
+  This answers the first question. 
+  This is also why colimits differ to the ones in $\SET$
+  \emph{except} for the case of $\TOP$,
+  since the forgetful functor also admits a \emph{right adjoint},
+  namely taking the indiscrete topology. 
+  This then implies the forgetful functor also preserves colimits.
+  This answers the second question.
+\end{rmk}
